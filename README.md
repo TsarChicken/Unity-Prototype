@@ -11,3 +11,5 @@ Triangle - changing grabity direction
 R1 - environment gravity (switch/not switch)
 L1 - player gravity (switch/not switch)
 R2 - shoot (might have some delay before/after a shot - depends on modified value)
+
+First version uses Old Input System. Until it is made into the New one, you should press NO before the editor gets loaded.

@@ -54,7 +54,7 @@ public class MovementManager : MonoBehaviour, IMovementManager
     }
 
 
-    void Awake()
+    void Start()
     {
         input = InputManager.instance;
         rb = GetComponent<Rigidbody2D>();

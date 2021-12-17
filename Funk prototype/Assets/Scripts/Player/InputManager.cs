@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour, IInputManager
 {
 
@@ -102,5 +102,36 @@ public class InputManager : MonoBehaviour, IInputManager
         shootPressed =  Input.GetButtonDown(InputInfo.SHOOT);
 
 
+    }
+    public void OnAim(InputAction.CallbackContext context)
+    {
+        Debug.Log((Mathf.Clamp(context.ReadValue<Vector2>().x, -1, 1), Mathf.Clamp(context.ReadValue<Vector2>().y, -1, 1)));
+        aim = (Mathf.Clamp( context.ReadValue<Vector2>().x, -1, 1), Mathf.Clamp(context.ReadValue<Vector2>().y, -1, 1));
+    }
+
+    public void OnFire(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+            print("FIRE");
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            print("JUMP");   
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+
+            print("OnInteract");
+    }
+
+    public void OnSwitchGravity(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+
+            print("OnSwitchGravity");
     }
 }

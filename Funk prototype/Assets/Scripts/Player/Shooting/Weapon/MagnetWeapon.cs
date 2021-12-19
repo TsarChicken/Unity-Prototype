@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//When getting bullet back, should work like a magnet, with all physics included. Yet to be done
 public class MagnetWeapon : MonoBehaviour, IWeapon
 {
     private InputManager input;
@@ -61,6 +62,7 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
       
         if (isBacktracking)
         {
+            //Temporary replacement of magnet behaviour
             bullet.position = Vector3.Lerp(bullet.position, firePoint.position, bulletBackSpace * Time.deltaTime);
 
         }
@@ -117,11 +119,11 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
         float angle = 0f;
         if(direction == 1)
         {
-            angle = -(Mathf.Atan2(input.aim.y, input.aim.x) * Mathf.Rad2Deg);
+            angle = (Mathf.Atan2(input.aim.y, input.aim.x) * Mathf.Rad2Deg);
         } else 
         if (direction == -1)
         {
-            angle = (Mathf.Atan2(input.aim.y, -input.aim.x) * Mathf.Rad2Deg);
+            angle = -(Mathf.Atan2(input.aim.y, -input.aim.x) * Mathf.Rad2Deg);
         }
 
         if (input.aim.x == 0f && input.aim.y == 0f)

@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 3698034074326713354}
   - component: {fileID: 3698034074326713353}
   - component: {fileID: 3698034074326713352}
+  - component: {fileID: 821380176}
   m_Layer: 6
   m_Name: MainPlayer
   m_TagString: Untagged
@@ -326,7 +327,6 @@ MonoBehaviour:
   acceleration: 14
   decceleration: 14
   velPower: 0.9
-  frictionAmount: 2
   linearDrag: 2.5
   jumpForce: 15
   standartGravity: 1
@@ -389,6 +389,132 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0d7ca8bf4ca504a8d604fe1fae27b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &821380176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3945183291083051165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 6f2b7d2c4e4508140bdb67f3e5f0b79c, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3698034074326713355}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 336174a3-a5f5-4d64-914f-7b771b7b98bd
+    m_ActionName: Controls/Jump[/Keyboard/space,/DualShock4GamepadHID/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3698034074326713355}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnSwitchGravity
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b559a709-d5c1-45d6-8f0d-bc4a91b4d8cc
+    m_ActionName: Controls/Switch Gravity[/Keyboard/x,/DualShock4GamepadHID/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3698034074326713355}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnFire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3e791f74-6a2a-4a5f-9865-459fa619d8ed
+    m_ActionName: Controls/Fire[/Mouse/leftButton,/DualShock4GamepadHID/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3698034074326713355}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: aa71b1b7-5a20-4e8a-858c-3918a64ded6d
+    m_ActionName: Controls/Interact[/Keyboard/f,/DualShock4GamepadHID/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3698034074326713355}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8b4fd696-f08c-4026-aa65-224e1bf57371
+    m_ActionName: Controls/Move[/Keyboard/a,/Keyboard/d,/DualShock4GamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/right]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3698034074326713355}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnAim
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4d4c954d-ad65-499a-8e58-0b1a11a04e65
+    m_ActionName: Controls/Aim[/Mouse/delta,/DualShock4GamepadHID/rightStick]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Controller
+  m_DefaultActionMap: Controls
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &6672259125615361110
 PrefabInstance:
   m_ObjectHideFlags: 0

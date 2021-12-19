@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Auto Aim weapon. Haven't figured out its functionality yet.
+//For now, its aim is just a copy of magnet weapon's aim
 public class AimWeapon : MonoBehaviour, IWeapon
 {
     private InputManager input;
@@ -98,26 +100,26 @@ public class AimWeapon : MonoBehaviour, IWeapon
         }
 
         lineRenderer.enabled = true;
-        print("lineRenderer  " + lineRenderer.enabled);
 
         yield return new WaitForSeconds(0.01f);
 
         lineRenderer.enabled = false;
-        print("new lineRenderer  " + lineRenderer.enabled);
         yield return new WaitForSeconds(1f);
 
     }
+    
+    //Copy of MagnetWeapon aim. Should be replaced with auto-aim functionality
     public GameObject Aim()
     {
 
         float angle = 0f;
         if (direction == 1)
         {
-            angle = -(Mathf.Atan2(input.aim.y, input.aim.x) * Mathf.Rad2Deg);
+            angle = (Mathf.Atan2(input.aim.y, input.aim.x) * Mathf.Rad2Deg);
         }
         else if (direction == -1)
         {
-            angle = (Mathf.Atan2(input.aim.y, -input.aim.x) * Mathf.Rad2Deg);
+            angle = -(Mathf.Atan2(input.aim.y, -input.aim.x) * Mathf.Rad2Deg);
         }
 
         if (input.aim.x == 0f && input.aim.y == 0f)

@@ -10,28 +10,31 @@ public class Health : MonoBehaviour
     private float hp = 100;
     [SerializeField] 
     private float lowDam, mediumDam, highDam;
-    void Update()
-    {
-        if (IsDead())
-            Die();
-    }
+  
     public void LowDamage()
     {
-        hp -= 15;
+        hp -= lowDam;
+        Die();
+
     }
     public void MediumDamage()
     {
-        hp -= 30;
+        hp -= mediumDam;
+        Die();
+
     }
 
     public void HighDamage()
     {
-        hp -= 60;
+        hp -= highDam;
+        Die();
+
     }
 
     public void MaxDamage()
     {
         hp -= hp;
+        Die();
     }
     public bool IsDead()
     {
@@ -40,6 +43,7 @@ public class Health : MonoBehaviour
 
     public void Die()
     {
-        gameObject.SetActive(false);
+        if (IsDead())
+            gameObject.SetActive(false);
     }
 }

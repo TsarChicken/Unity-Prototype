@@ -21,7 +21,6 @@ public class Camera : MonoBehaviour, ICamera
         StartCoroutine(rotator.Rotate(movement.Multiplier));
         movement.FlipGroundPhys();
 
-        Debug.Log("rotation");
     }
 
 }

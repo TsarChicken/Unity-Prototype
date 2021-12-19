@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+//Input Manager is based on the Old Input System.
+//The class is yet to be remade according to New System demands -
+//Input Manager should be based on Events and accumulate other scripts' methods.
 public class InputManager : MonoBehaviour, IInputManager
 {
 
@@ -11,7 +14,7 @@ public class InputManager : MonoBehaviour, IInputManager
     public (float x, float y) aim { get; private set; }
 
     //Front buttons used
-    public bool jumpPressed { get; private set; }
+    public bool jumpPressed { get;  set; }
     public bool interactPressed { get; private set; }
     public bool flipPhysicsPressed { get; private set; }
     public bool meleePressed { get; private set; }
@@ -49,14 +52,6 @@ public class InputManager : MonoBehaviour, IInputManager
         ClearInputs();
 
         ProcessInputs();
-
-        if (horizontal > 0)
-            horizontal = 1f;
-        if(horizontal < 0)
-        {
-            horizontal = -1f;
-        }
-
     }
 
     private void FixedUpdate()
@@ -68,13 +63,11 @@ public class InputManager : MonoBehaviour, IInputManager
         //If not ready to clear input, exit
         if (!readyToClear)
             return;
-        aim = (0f, 0f);
         //Reset all inputs
-        horizontal = 0f;
-        jumpPressed = false;
-        interactPressed = false;
-        flipPhysicsPressed = false;
-        shootPressed = false;
+        //jumpPressed = false;
+        //interactPressed = false;
+        //flipPhysicsPressed = false;
+        //shootPressed = false;
         meleePressed = false;
         characterPhysPressed = false;
         environmentPhysPressed = false;
@@ -84,13 +77,11 @@ public class InputManager : MonoBehaviour, IInputManager
     public void ProcessInputs()
     {
         //Accumulate joysticks input
-        horizontal += Input.GetAxis(InputInfo.MOVE);
-        aim = (Input.GetAxis(InputInfo.AIM_X), Input.GetAxis(InputInfo.AIM_Y));
 
         //Accumulate button inputs
-        jumpPressed = jumpPressed || Input.GetButtonDown(InputInfo.JUMP);
-        interactPressed =  Input.GetButtonDown(InputInfo.INTERACT);
-        flipPhysicsPressed = Input.GetButtonDown(InputInfo.FLIP_GRAVITY);
+        //jumpPressed = jumpPressed || Input.GetButtonDown(InputInfo.JUMP);
+        //interactPressed = Input.GetButtonDown(InputInfo.INTERACT);
+        //flipPhysicsPressed = Input.GetButtonDown(InputInfo.FLIP_GRAVITY);
         meleePressed = Input.GetButtonDown(InputInfo.MELEE);
 
         //Accumulate physics inputs
@@ -99,39 +90,42 @@ public class InputManager : MonoBehaviour, IInputManager
 
 
         distantCameraPressed = distantCameraPressed || Input.GetButton(InputInfo.CAMERA_DISTANT);
-        shootPressed =  Input.GetButtonDown(InputInfo.SHOOT);
+        //shootPressed = Input.GetButtonDown(InputInfo.SHOOT);
 
 
     }
+
+    //Input events are yet to be done right
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        horizontal = Mathf.Clamp(context.ReadValue<Vector2>().x, -1, 1);
+    }
     public void OnAim(InputAction.CallbackContext context)
     {
-        Debug.Log((Mathf.Clamp(context.ReadValue<Vector2>().x, -1, 1), Mathf.Clamp(context.ReadValue<Vector2>().y, -1, 1)));
-        aim = (Mathf.Clamp( context.ReadValue<Vector2>().x, -1, 1), Mathf.Clamp(context.ReadValue<Vector2>().y, -1, 1));
+        aim = ( context.ReadValue<Vector2>().x, context.ReadValue<Vector2>().y);
     }
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        if(context.performed)
-            print("FIRE");
+        shootPressed = context.performed;
+       
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed)
-            print("JUMP");   
+        jumpPressed = context.performed;
+        
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (context.performed)
-
-            print("OnInteract");
+        interactPressed = context.performed;
+        if (interactPressed)
+            print("Interact");
     }
 
     public void OnSwitchGravity(InputAction.CallbackContext context)
     {
-        if (context.performed)
-
-            print("OnSwitchGravity");
+        flipPhysicsPressed = context.performed;
     }
 }

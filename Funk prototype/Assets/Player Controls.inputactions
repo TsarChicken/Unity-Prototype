@@ -216,6 +216,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Left/Right",
+                    "id": "b24c83e2-05b1-4703-9272-af979f429cc0",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "left",
+                    "id": "bd6d6607-0308-4e28-b26e-77fa0e2f6f90",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "52a5705f-6a2c-47eb-b989-84940c11691f",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "cd6df262-555b-4b9d-882a-40371edf23d6",
                     "path": "<Mouse>/delta",

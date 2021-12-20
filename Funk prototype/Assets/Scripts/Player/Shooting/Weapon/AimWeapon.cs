@@ -40,10 +40,10 @@ public class AimWeapon : MonoBehaviour, IWeapon
             enemy.GetComponentInChildren<SpriteRenderer>().color = Color.blue;
         }
 
-        if (input.shootPressed && Time.time > waitBeforeShooting)
-        {
-            Shoot();
-        }
+        //if (input.shootPressed && Time.time > waitBeforeShooting)
+        //{
+        //    Shoot();
+        //}
 
 
 
@@ -67,9 +67,12 @@ public class AimWeapon : MonoBehaviour, IWeapon
 
     public void Shoot()
     {
-        StartCoroutine(RaycastShoot());
-        waitBeforeShooting = Time.time + shootWaitTime;
-
+        print("Shoot");
+        if (Time.time > waitBeforeShooting)
+        {
+            StartCoroutine(RaycastShoot());
+            waitBeforeShooting = Time.time + shootWaitTime;
+        }
     }
 
 

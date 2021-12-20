@@ -91,7 +91,9 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
 
     public void Shoot()
     {
-
+        print("Shoot");
+        if (Time.time <= waitBeforeShooting)
+            return;
 
         bullet.gameObject.SetActive(true);
 

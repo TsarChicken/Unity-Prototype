@@ -17,36 +17,36 @@ public class GravityManager : MonoBehaviour, IGravityManager
     {
         movement = GetComponent<MovementManager>();
         input = InputManager.instance;
+        player = true;
+        environment = true;
     }
 
-    void Update()
+    public void AllowSwitch()
     {
-        if (movement.IsOnGround())
-            canSwitch = true;
+        if(!canSwitch)
+        canSwitch = true;
+    }
 
-        if (input.characterPhysPressed)
-        {
-            player = !player;
-        }
-        if (input.environmentPhysPressed)
-        {
-            environment = !environment;
-        }
+    public void FlipCharacterPhys()
+    {
+        player = !player;
+        MakeAmends();
+    }
 
-        if(!player && !environment)
+    public void FlipEnvironmentPhys()
+    {
+        environment = !environment;
+        MakeAmends();
+    }
+
+    private void MakeAmends()
+    {
+        if (!player && !environment)
         {
             player = true;
             environment = true;
         }
-
-        if (input.flipPhysicsPressed)
-        {
-            SwitchGravity();
-        }
-
-
     }
-
     public void SwitchGravity() {
         if (!canSwitch)
             return;

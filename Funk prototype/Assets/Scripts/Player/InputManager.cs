@@ -64,13 +64,7 @@ public class InputManager : MonoBehaviour, IInputManager
         if (!readyToClear)
             return;
         //Reset all inputs
-        //jumpPressed = false;
-        //interactPressed = false;
-        //flipPhysicsPressed = false;
-        //shootPressed = false;
         meleePressed = false;
-        characterPhysPressed = false;
-        environmentPhysPressed = false;
         distantCameraPressed = false;
         readyToClear = false;
     }
@@ -83,10 +77,6 @@ public class InputManager : MonoBehaviour, IInputManager
         //interactPressed = Input.GetButtonDown(InputInfo.INTERACT);
         //flipPhysicsPressed = Input.GetButtonDown(InputInfo.FLIP_GRAVITY);
         meleePressed = Input.GetButtonDown(InputInfo.MELEE);
-
-        //Accumulate physics inputs
-        characterPhysPressed =Input.GetButtonDown(InputInfo.PLAYER_PHYS);
-        environmentPhysPressed = Input.GetButtonDown(InputInfo.ENVIRONMENT_PHYS);
 
 
         distantCameraPressed = distantCameraPressed || Input.GetButton(InputInfo.CAMERA_DISTANT);
@@ -107,25 +97,46 @@ public class InputManager : MonoBehaviour, IInputManager
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        shootPressed = context.performed;
+        if (context.performed)
+        {
+            IWeapon weapon = GetComponentInChildren<IWeapon>();
+            if (weapon != null)
+                weapon.Shoot();
+        }
        
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        jumpPressed = context.performed;
-        
+        if(context.performed)
+            GetComponent<MovementManager>().SetJump();
+        if(context.canceled)
+            GetComponent<MovementManager>().ClearJump();
+
+
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        interactPressed = context.performed;
-        if (interactPressed)
-            print("Interact");
+        if(context.performed)
+            InteractionManager.instance.Interact();
     }
 
     public void OnSwitchGravity(InputAction.CallbackContext context)
     {
-        flipPhysicsPressed = context.performed;
+        if(context.performed)
+            GetComponent<GravityManager>().SwitchGravity();
+    }
+
+    public void OnCharacterPhys(InputAction.CallbackContext context)
+    {
+        GetComponent<GravityManager>().FlipCharacterPhys();
+
+    }
+
+    public void OnEnvironmentPhys(InputAction.CallbackContext context)
+    {
+        GetComponent<GravityManager>().FlipEnvironmentPhys();
+
     }
 }

@@ -27,13 +27,23 @@ public class InteractionManager : MonoBehaviour
         {
              interactiveObj.GetComponent<SpriteRenderer>().color = Color.red;
         }
-        if (input.interactPressed)
-        {
+        //if (input.interactPressed)
+        //{
+        //    Debug.Log("O pressed");
+        //    if (interactiveObj)
+        //    {
+        //        interactiveObj.GetComponent<IInteractive>().Interact();
+        //    }
+        //}
+    }
+
+    public void Interact()
+    {
+       
             Debug.Log("O pressed");
             if (interactiveObj)
             {
                 interactiveObj.GetComponent<IInteractive>().Interact();
             }
-        }
     }
 }

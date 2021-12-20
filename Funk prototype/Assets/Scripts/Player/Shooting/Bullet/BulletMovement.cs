@@ -43,10 +43,11 @@ public class BulletMovement : MonoBehaviour
                     if (!hitHP.IsDead())
                     {
                         Stop(hit);
-                    } 
-                } else
+                    }
+                }
+                else
 
-                Stop(hit);
+                    Stop(hit);
             }
 
         }
@@ -77,7 +78,8 @@ public class BulletMovement : MonoBehaviour
         transform.SetParent(weapon);
         weaponScr = script;
     }
-   
+
+    
 
 }
 

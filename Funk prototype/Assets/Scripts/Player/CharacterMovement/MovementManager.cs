@@ -73,10 +73,17 @@ public class MovementManager : MonoBehaviour, IMovementManager
     }
     public void CheckPhysics()
     {
-        if (isOnGround && isChangingGravity)
+        if (isOnGround)
         {
-            isChangingGravity = false;
+            if (isChangingGravity)
+            {
+                isChangingGravity = false;
+            } else
+            {
+                GetComponent<GravityManager>().AllowSwitch();
+            }
         }
+
     }
 
     public void MoveCharacter()
@@ -123,10 +130,11 @@ public class MovementManager : MonoBehaviour, IMovementManager
     #region air
     public void MidAirMovement()
     {
-        if (input.jumpPressed)
-        {
-            jumpBufferCounter = jumpBufferTime;
-        } else
+        //if (input.jumpPressed)
+        //{
+        //    jumpBufferCounter = jumpBufferTime;
+        //} else
+        if(jumpBufferCounter != Time.deltaTime)
         {
             jumpBufferCounter -= Time.deltaTime;
         }
@@ -183,13 +191,21 @@ public class MovementManager : MonoBehaviour, IMovementManager
         rb.drag = airLinearDrag;
     }
 
-    private void Jump()
+    public void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, 0f);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         isOnGround = false;
         coyoteCounter = 0f;
         jumpBufferCounter = 0f;
+    }
+    public void SetJump()
+    {
+        jumpBufferCounter = jumpBufferTime;
+    }
+    public void ClearJump()
+    {
+        jumpBufferCounter -= Time.deltaTime;
     }
 
     public void FlipAirPhys()

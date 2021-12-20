@@ -135,7 +135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 400
-  rb: {fileID: 5247635921584471525}
   collisionLayer:
     serializedVersion: 2
     m_Bits: 144

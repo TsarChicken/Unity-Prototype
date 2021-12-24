@@ -91,7 +91,6 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
 
     public void Shoot()
     {
-        print("Shoot");
         if (Time.time <= waitBeforeShooting)
             return;
 
@@ -118,22 +117,13 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
     public GameObject Aim()
     {
 
-        float angle = 0f;
-        if(direction == 1)
-        {
-            angle = (Mathf.Atan2(input.aim.y, input.aim.x) * Mathf.Rad2Deg);
-        } else 
-        if (direction == -1)
-        {
-            angle = -(Mathf.Atan2(input.aim.y, -input.aim.x) * Mathf.Rad2Deg);
-        }
-
+        
+        float angle = (Mathf.Atan2(input.aim.y, input.aim.x * direction) * Mathf.Rad2Deg) * direction;
         if (input.aim.x == 0f && input.aim.y == 0f)
             angle = previousAngle;
 
         weaponToRotate.eulerAngles = new Vector3(0, 0, angle);
 
-       
         bool check = direction == 1 ? angle > 90 || angle < -90 : !(angle > 90 || angle < -90);
         float y = 0;
         if (check)

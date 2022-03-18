@@ -7,6 +7,8 @@ public class BulletMovement : MonoBehaviour
     public float speed = 20f;
     public Rigidbody2D rb { get; set; }
     public LayerMask collisionLayer;
+    public LayerMask playerLayer;
+
     MagnetWeapon weaponScr;
 
     Vector3 mPrevPos;
@@ -51,11 +53,32 @@ public class BulletMovement : MonoBehaviour
             }
 
         }
+        //if (weaponScr.isBacktracking)
+        //{
+        //    Vector2 direction = (Vector2)weaponScr.firePoint.position - rb.position;
+        //    RaycastHit2D hit = Physics2D.Raycast(mPrevPos, direction, (transform.position - mPrevPos).magnitude, playerLayer);
+        //    if (hit)
+        //    {
+
+        //    }
+        //}
        
         mPrevPos = transform.position;
 
 
     }
+
+    //void Attract(Rigidbody2D rb)
+    //{
+
+    //    Vector3 direction = firePoint.position - (Vector3)rb.position;
+    //    float distance = direction.magnitude;
+
+    //    float forceMagnitude = G / Mathf.Pow(distance, 2);
+    //    Vector3 force = direction.normalized * forceMagnitude;
+
+    //    rb.AddForce(force);
+    //}
 
     public void ClearKinematic()
     {

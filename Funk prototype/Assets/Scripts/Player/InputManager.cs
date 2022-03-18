@@ -2,141 +2,226 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-//Input Manager is based on the Old Input System.
-//The class is yet to be remade according to New System demands -
-//Input Manager should be based on Events and accumulate other scripts' methods.
-public class InputManager : MonoBehaviour, IInputManager
+
+public class InputManager : IControllable
 {
+    private RestrictionManager restrictor;
 
-    public static InputManager instance = null;
-    //Joysticks used
-    public float horizontal { get; private set; }
-    public (float x, float y) aim { get; private set; }
+    private PlayerEvents playerEvents;
 
-    //Front buttons used
-    public bool jumpPressed { get;  set; }
-    public bool interactPressed { get; private set; }
-    public bool flipPhysicsPressed { get; private set; }
-    public bool meleePressed { get; private set; }
-
-    //Manipulate Physics
-
-    public bool characterPhysPressed { get; private set; }
-    public bool environmentPhysPressed { get; private set; }
-
-
-    //Triggers pressed
-    //Camera manipulation is yet to be done
-    public bool distantCameraPressed { get; private set; }
-    public bool shootPressed { get; private set; }
-
-
-    private bool readyToClear;
-
-    void Awake()
+    private EventsChecker checker;
+    private void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        } else if(instance == this)
-        {
-            Destroy(gameObject);
-        }
-        ClearInputs();
+        restrictor = RestrictionManager.Instance;
+        playerEvents = GetComponent<PlayerEvents>();
+        checker = GetComponent<EventsChecker>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        ClearInputs();
-
-        ProcessInputs();
-    }
-
-    private void FixedUpdate()
-    {
-        readyToClear = true;
-    }
-    public void ClearInputs()
-    {
-        //If not ready to clear input, exit
-        if (!readyToClear)
-            return;
-        //Reset all inputs
-        meleePressed = false;
-        distantCameraPressed = false;
-        readyToClear = false;
-    }
-    public void ProcessInputs()
-    {
-        //Accumulate joysticks input
-
-        //Accumulate button inputs
-        //jumpPressed = jumpPressed || Input.GetButtonDown(InputInfo.JUMP);
-        //interactPressed = Input.GetButtonDown(InputInfo.INTERACT);
-        //flipPhysicsPressed = Input.GetButtonDown(InputInfo.FLIP_GRAVITY);
-        meleePressed = Input.GetButtonDown(InputInfo.MELEE);
-
-
-        distantCameraPressed = distantCameraPressed || Input.GetButton(InputInfo.CAMERA_DISTANT);
-        //shootPressed = Input.GetButtonDown(InputInfo.SHOOT);
-
-
-    }
-
-    //Input events are yet to be done right
     public void OnMove(InputAction.CallbackContext context)
     {
-        horizontal = Mathf.Clamp(context.ReadValue<Vector2>().x, -1, 1);
+        if (playerEvents.onMove.IsEmpty())
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onMove.Invoke(context.ReadValue<Vector2>());
     }
     public void OnAim(InputAction.CallbackContext context)
     {
-        aim = ( context.ReadValue<Vector2>().x, context.ReadValue<Vector2>().y);
+        if (playerEvents.onAim.IsEmpty() )
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onAim.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (!context.performed)
         {
-            IWeapon weapon = GetComponentInChildren<IWeapon>();
-            if (weapon != null)
-                weapon.Shoot();
+            return;
         }
-       
+        if (playerEvents.onFire.IsEmpty() || checker.CanFire == false)
+        {
+            restrictor.Restrict();
+            return;
+        }
+        
+        playerEvents.onFire.Invoke();
+
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if(context.performed)
-            GetComponent<MovementManager>().SetJump();
-        if(context.canceled)
-            GetComponent<MovementManager>().ClearJump();
+        if (!context.performed)
+        {
+            return;
+        }
 
+        if (playerEvents.onJump.IsEmpty() ||checker.CanJump == false)
+        {
+            restrictor.Restrict();
+            return;
+        }
+        
+            playerEvents.onJump.Invoke();
+        
 
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if(context.performed)
-            InteractionManager.instance.Interact();
+        if (!context.performed)
+        {
+            return;
+        }
+        if (playerEvents.onInteract.IsEmpty() || checker.CanInteract == false)
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onInteract.Invoke();
     }
 
     public void OnSwitchGravity(InputAction.CallbackContext context)
     {
-        if(context.performed)
-            GetComponent<GravityManager>().SwitchGravity();
+        if (!context.performed)
+        {
+            return;
+        }
+        if (playerEvents.onGravitySwitch.IsEmpty() || checker.CanSwitchGravity == false)
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onGravitySwitch.Invoke();
     }
 
     public void OnCharacterPhys(InputAction.CallbackContext context)
     {
-        GetComponent<GravityManager>().FlipCharacterPhys();
-
+        if (!context.performed)
+        {
+            return;
+        }
+        if (playerEvents.onPlayerGravity.IsEmpty())
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onPlayerGravity.Invoke();
     }
 
     public void OnEnvironmentPhys(InputAction.CallbackContext context)
     {
-        GetComponent<GravityManager>().FlipEnvironmentPhys();
+        if (!context.performed)
+        {
+            return;
+        }
+        if (playerEvents.onEnvironmentGravity.IsEmpty())
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onEnvironmentGravity.Invoke();
+    }
 
+    public void OnCrouch(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        if (playerEvents.onCrouch.IsEmpty() )
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onCrouch.Invoke();
+
+    }
+
+    public void OnHighlight(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        if (playerEvents.onHighlight.IsEmpty())
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onHighlight.Invoke();
+    }
+
+    public void OnDrawWeapon(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        if (playerEvents.onWeaponSwitch.IsEmpty())
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onWeaponSwitch.Invoke();
+    }
+
+    public void OnFireMode(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        if (playerEvents.onFireModeSwitch.IsEmpty() )
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onFireModeSwitch.Invoke();
+    }
+
+    public void OnMelee(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        if (playerEvents.onMelee.IsEmpty() )
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onMelee.Invoke();
+    }
+
+    public void OnCameraDistant(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        if (playerEvents.onTrajectory.IsEmpty())
+        {
+            restrictor.Restrict();
+            return;
+        }
+        playerEvents.onTrajectory.Invoke();
+    }
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        if (playerEvents.onPause.IsEmpty())
+        {
+            restrictor.Restrict();
+            return;
+        }
+
+        playerEvents.onPause.Invoke();
     }
 }

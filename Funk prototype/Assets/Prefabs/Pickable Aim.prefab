@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d32d8736a469df4fb9a64188f8b7d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!114 &2279061568931807212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,5 +136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae989ea1dfffb74cae8cc32631f345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
+  player: {fileID: 0}
+  weaponManager: {fileID: 0}
   weapon: {fileID: 0}

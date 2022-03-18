@@ -4,52 +4,38 @@ using UnityEngine;
 
 //Auto Aim weapon. Haven't figured out its functionality yet.
 //For now, its aim is just a copy of magnet weapon's aim
-public class AimWeapon : MonoBehaviour, IWeapon
+public class AimWeapon : IWeapon
 {
-    private InputManager input;
-    public bool isBacktracking, isShooting;
     private float previousAngle = 0f;
 
     private float direction = 1f;
     [SerializeField]
     private float waitBeforeShooting, shootWaitTime;
-    [SerializeField]
-    private Transform firePoint;
+    
     [SerializeField]
     private LineRenderer lineRenderer;
 
-    [SerializeField]
-    private Transform weaponToRotate;
+    
     [SerializeField]
     private LayerMask collisionLayer, enemyLayer;
 
-   
-    void Start()
+    private float aimX = 0f, aimY = 0f;
+
+    [SerializeField]
+    protected Transform weaponToRotate;
+
+
+    private void Start()
     {
-        input = GetComponentInParent<InputManager>();
+        //input = GetComponentInParent<InputManager>();
         weaponToRotate = GetComponent<Transform>();
-
+        HandleShooting = Shoot;
+        HandleAiming = HandAim;
     }
-    void Update()
-    {
 
-
-        GameObject enemy = Aim();
-        if (enemy)
-        {
-            enemy.GetComponentInChildren<SpriteRenderer>().color = Color.blue;
-        }
-
-        //if (input.shootPressed && Time.time > waitBeforeShooting)
-        //{
-        //    Shoot();
-        //}
-
-
-
-    }
    
-    public void Activate()
+   
+    public override void Activate()
     {
         gameObject.SetActive(true);
         waitBeforeShooting = Time.time + shootWaitTime;
@@ -57,17 +43,32 @@ public class AimWeapon : MonoBehaviour, IWeapon
         transform.localPosition = new Vector3(0.485f, -0.06f, 0);
         GetComponent<SpriteRenderer>().color = Color.white;
     }
-    public void Deactivate()
+    public override void Deactivate()
     {
         gameObject.SetActive(false);
 
     }
-
-
-
-    public void Shoot()
+    protected override void Fire()
     {
-        print("Shoot");
+        HandleShooting();
+    }
+    protected override void UpdateAim(Vector2 param)
+    {
+        aimX = param.x;
+        aimY = param.y;
+    }
+    public override void SwitchFunctional()
+    {
+        if(HandleAiming == HandAim)
+        {
+            HandleAiming = AutoAim;
+        } else
+        {
+            HandleAiming = HandAim;
+        }
+    }
+    private void Shoot()
+    {
         if (Time.time > waitBeforeShooting)
         {
             StartCoroutine(RaycastShoot());
@@ -87,8 +88,6 @@ public class AimWeapon : MonoBehaviour, IWeapon
             {
                 enemy.MediumDamage();
             }
-
-
         }
         RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right, 100f, collisionLayer);
         lineRenderer.SetPosition(0, firePoint.position);
@@ -111,13 +110,11 @@ public class AimWeapon : MonoBehaviour, IWeapon
 
     }
     
-    //Copy of MagnetWeapon aim. Should be replaced with auto-aim functionality
-    public GameObject Aim()
+    private GameObject HandAim()
     {
 
-        float angle = (Mathf.Atan2(input.aim.y, input.aim.x * direction) * Mathf.Rad2Deg) * direction;
-
-        if ((input.aim.x == 0f && input.aim.y == 0f))
+        float angle = (Mathf.Atan2(aimY  , aimX * direction) * Mathf.Rad2Deg) * direction;
+        if ((aimY == 0f && aimX == 0f))
             angle = previousAngle;
 
         weaponToRotate.eulerAngles = new Vector3(0, 0, angle);
@@ -142,8 +139,11 @@ public class AimWeapon : MonoBehaviour, IWeapon
         else
             return null;
     }
-
-    public void FlipDirection()
+    private GameObject AutoAim()
+    {
+        return null;
+    }
+    public override void FlipDirection()
     {
         direction *= -1;
     }

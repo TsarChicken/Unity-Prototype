@@ -1,274 +1,201 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-public class MovementManager : MonoBehaviour, IMovementManager
+public class MovementManager : MonoBehaviour
 {
-    private InputManager input;
+    private PlayerEvents input;
+    private EventsChecker checker;
     private Rigidbody2D rb;
-    private IRotator rotator;
+    private Rotator rotator;
+    private int controlDirection = 0;
+    
+    private BoxCollider2D collider;
+    private Vector2 colliderStandSize;
+    private Vector2 colliderCrouchSize;
+    private Vector2 colliderStandOffset;
+    private Vector2 colliderCrouchOffset;
 
-    [SerializeField] 
-    private LayerMask groundLayer;
-
-
-
-    [Header("Ground Movement Variables")]
-    [SerializeField] private float moveSpeed = 16f;
-    [SerializeField] private float acceleration = 7f;
-    [SerializeField] private float decceleration = 7f;
-    [SerializeField] private float velPower = 0.9f;
-    [SerializeField] private float linearDrag;
-
-    [Header("MidAir Movement Variables")]
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float standartGravity = 1f;
-    [SerializeField] private float fallMultiplier;
-    [SerializeField] private float lowJumpFallMultiplier;
-    [SerializeField] private float airLinearDrag;
-    [SerializeField] private float coyoteTime;
-    [SerializeField] private float jumpBufferTime;
-
-    private float coyoteCounter;
-    private float jumpBufferCounter;
+    private PhysicsInfo physicsInfo;
 
 
-    [Header("Status Flags")]
-    [SerializeField] private bool isOnGround;
-    [SerializeField] private bool isHeadBlocked;
+
+   
+    private GravityManager gravity;
+
+   
 
 
-    private float horizontalDirection;
+    
 
-    private bool changingDirection => (rb.velocity.x > 0f && horizontalDirection < 0f)
-        || (rb.velocity.x < 0f && horizontalDirection > 0f);
-
-    public bool isChangingGravity { private get; set; }
-
-
-    public float Multiplier { 
-        get
-        {
-            return fallMultiplier;
-        } 
-    }
-
-
-    void Start()
+    void Awake()
     {
-        input = InputManager.instance;
+        input = GetComponent<PlayerEvents>();
+        checker = GetComponent<EventsChecker>();
         rb = GetComponent<Rigidbody2D>();
-        rotator = new Rotator(transform, 0f, groundLayer);
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        CheckPhysics();
-
-        GroundMovement();
-        MidAirMovement();
-
+        rotator = GetComponent<Rotator>();
+        gravity = GetComponent<GravityManager>();
+        physicsInfo = GetComponent<PhysicsInfo>();
+        collider = GetComponent<BoxCollider2D>();
+        colliderCrouchSize = new Vector2(collider.size.x, collider.size.y / 2f);
+        colliderCrouchOffset = new Vector2(collider.offset.x, collider.offset.y / 2f);
+        colliderStandSize = collider.size;
+        colliderStandOffset = collider.offset;
 
     }
-    public void CheckPhysics()
+
+    private void OnEnable()
     {
-        if (isOnGround)
+        input.onJump.AddListener(Jump);
+        input.onMove.AddListener(UpdateDirection);
+        input.onCrouch.AddListener(HandleCrouch);
+
+    }
+    private void OnDisable()
+    {
+        input.onJump.RemoveListener(Jump);
+        input.onMove.RemoveListener(UpdateDirection);
+        input.onCrouch.RemoveListener(HandleCrouch);
+
+    }
+    private void FixedUpdate()
+    {
+        MoveCharacter();
+    }
+
+    private void UpdateDirection(Vector2 param)
+    {
+        if (param.x > 0)
         {
-            if (isChangingGravity)
-            {
-                isChangingGravity = false;
-            } else
-            {
-                GetComponent<GravityManager>().AllowSwitch();
-            }
+            controlDirection = 1;
+        }
+        else if (param.x < 0)
+        {
+            controlDirection = -1;
+        }
+        else
+        {
+            controlDirection = 0;
+        }
+    }
+
+
+    public void MoveSlowly()
+    {
+       physicsInfo.currentSpeed *= physicsInfo.slowModifier;
+    }
+
+    public void HandleCrouch()
+    {
+        if (physicsInfo.isCrouching)
+        {
+            StandUp();
+        }
+        else
+        {
+            Crouch();
+        }
+    }
+    public void StandUp()
+    {
+        if (physicsInfo.isHeadBlocked)
+        {
+            RestrictionManager.Instance.Restrict();
+            return;
+        }
+        physicsInfo.isCrouching = false;
+        collider.size = colliderStandSize;
+        collider.offset = colliderStandOffset;
+        if (physicsInfo.currentSpeed <= physicsInfo.moveSpeed * physicsInfo.crouchModifier)
+        {
+            physicsInfo.currentSpeed /= physicsInfo.crouchModifier;
         }
 
     }
+    public void Crouch()
+    {
+
+        physicsInfo.isCrouching = true;
+        collider.size = colliderCrouchSize;
+        collider.offset = colliderCrouchOffset;
+        physicsInfo.currentSpeed *= physicsInfo.crouchModifier;
+    }
+
+
 
     public void MoveCharacter()
     {
-        float targetSpeed = input.horizontal * moveSpeed;
+        float targetSpeed = physicsInfo.currentSpeed * controlDirection * transform.right.x;
+       
         float speedDif = targetSpeed - rb.velocity.x;
-        float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : decceleration;
+        float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? physicsInfo.acceleration : physicsInfo.decceleration;
 
-        float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
+        float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, physicsInfo.velPower) * Mathf.Sign(speedDif);
         rb.AddForce(movement * Vector2.right);
-        horizontalDirection = input.horizontal;
     }
+
+  
     public void RotateCharacter()
     {
-
-        StartCoroutine(rotator.Rotate(fallMultiplier));
-
+        rotator.HandleRotation(physicsInfo.fallMultiplier);
     }
 
     #region ground
     public void GroundMovement()
     {
         MoveCharacter();
-
-        if (isOnGround)
-        {
-            ApplyLinearDrag();
-            coyoteCounter = coyoteTime;
-        } else
-        {
-            coyoteCounter -= Time.deltaTime;
-        }
     }
-    private void ApplyLinearDrag()
-    {
-        if (Mathf.Abs(horizontalDirection) < 0.4f || changingDirection)
-        {
-            rb.drag = linearDrag;
-        }
-       
-    }
+    
     #endregion
 
     #region air
     public void MidAirMovement()
     {
-        //if (input.jumpPressed)
-        //{
-        //    jumpBufferCounter = jumpBufferTime;
-        //} else
-        if(jumpBufferCounter != Time.deltaTime)
+       
+        if(physicsInfo.jumpBufferCounter != Time.deltaTime)
         {
-            jumpBufferCounter -= Time.deltaTime;
+            physicsInfo.jumpBufferCounter -= Time.deltaTime;
         }
-        if(jumpBufferCounter > 0f && (isOnGround || coyoteCounter > 0f))
+        if(physicsInfo.jumpBufferCounter > 0f && (physicsInfo.isOnGround || physicsInfo.coyoteCounter > 0f))
         {
-
-            Jump();
+            SetJump();
         }
-        if (!isOnGround && !isChangingGravity)
+        if (!physicsInfo.isOnGround && !physicsInfo.isChangingGravity)
         {
-            ApplyAirLinearDrag();
-            FallMultiplier();
+            physicsInfo.ApplyAirLinearDrag();
+            physicsInfo.FallMultiplier();
         }
-        if (isChangingGravity)
-            coyoteCounter = 0f;
+        if (physicsInfo.isChangingGravity)
+            physicsInfo.coyoteCounter = 0f;
     }
 
-    private void FallMultiplier()
-    {
-        if (standartGravity > 0)
-        {
-            if (rb.velocity.y < 0)
-            {
-                rb.gravityScale = fallMultiplier;
-            }
-            else if (rb.velocity.y > 0 && !input.jumpPressed)
-            {
-                rb.gravityScale = lowJumpFallMultiplier;
-            }
-            else
-            {
-                rb.gravityScale = standartGravity;
-            }
-        }
-        else if (standartGravity < 0)
-        {
-            if (rb.velocity.y > 0)
-            {
-                rb.gravityScale = fallMultiplier;
-            }
-            else if (rb.velocity.y < 0 && !input.jumpPressed)
-            {
-                rb.gravityScale = lowJumpFallMultiplier;
-            }
-            else
-            {
-                rb.gravityScale = standartGravity;
-            }
-        }
-    }
 
-    private void ApplyAirLinearDrag()
-    {
-        rb.drag = airLinearDrag;
-    }
 
     public void Jump()
     {
+
+        StandUp();
+        physicsInfo.currentSpeed *= physicsInfo.airHorizontalSpeed;
         rb.velocity = new Vector2(rb.velocity.x, 0f);
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        isOnGround = false;
-        coyoteCounter = 0f;
-        jumpBufferCounter = 0f;
+        rb.AddForce(Vector2.up * physicsInfo.jumpForce, ForceMode2D.Impulse);
+        physicsInfo.isOnGround = false;
+        physicsInfo.coyoteCounter = 0f;
+        physicsInfo.jumpBufferCounter = 0f;
     }
     public void SetJump()
     {
-        jumpBufferCounter = jumpBufferTime;
+        physicsInfo.jumpBufferCounter = physicsInfo.jumpBufferTime;
     }
-    public void ClearJump()
-    {
-        jumpBufferCounter -= Time.deltaTime;
-    }
-
+    
     public void FlipAirPhys()
     {
-        FlipMultipliers();
-        FlipJump();
-        FlipStandartGravity();
-        coyoteCounter = 0f;
+        physicsInfo.FlipMultipliers();
+        physicsInfo.FlipJump();
+        physicsInfo.FlipStandartGravity();
+        physicsInfo.coyoteCounter = 0f;
     }
 
-    public void FlipStandartGravity()
-    {
-        standartGravity = -standartGravity;
-    }
-    public void FlipJump()
-    {
-        jumpForce = -jumpForce;
-    }
+  
 
-    public void FlipMultipliers()
-    {
-        lowJumpFallMultiplier = -lowJumpFallMultiplier;
-        fallMultiplier = -fallMultiplier;
-        rb.gravityScale = -rb.gravityScale;
-        coyoteCounter = 0f;
-    }
-
-    public void FlipGroundPhys()
-    {
-        moveSpeed *= -1;
-    }
-    #endregion
-
-    #region getters&setters
-    public LayerMask GetGroundLayer()
-    {
-        return groundLayer;
-    }
-
-    public void SetOnGround(bool isGr)
-    {
-        isOnGround = isGr;
-    }
-
-    public bool IsOnGround()
-    {
-        return isOnGround;
-    }
-
-    public void SetHeadBlocked(bool headBl)
-    {
-        isHeadBlocked = headBl;
-    }
-    public IRotator GetRotator()
-    {
-        return rotator;
-    }
-
-
-    public Transform GetTransform()
-    {
-        return transform;
-    }
     #endregion
 
 }

@@ -6,13 +6,8 @@ public class Interactive : MonoBehaviour, IInteractive
 {
     public delegate void Act();
     public Act act { set; private get; }
-    private InteractionManager player;
-    void Start()
-    {
-        player = InteractionManager.instance;
-
-    }
-
+    [SerializeField] private InteractionManager player;
+  
     private void OnDisable()
     {
         GetComponent<SpriteRenderer>().color = Color.white;
@@ -42,7 +37,7 @@ public class Interactive : MonoBehaviour, IInteractive
         {
             if (collision.gameObject.GetComponent<InteractionManager>())
             {
-                player.interactiveObj = gameObject;
+                player.interactiveObj = gameObject.GetComponent<IInteractable>();
             }
         }
     }

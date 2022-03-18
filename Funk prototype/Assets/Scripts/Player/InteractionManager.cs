@@ -4,46 +4,34 @@ using UnityEngine;
 
 public class InteractionManager : MonoBehaviour
 {
-    public GameObject interactiveObj { get; set; }
-    private InputManager input;
-    public static InteractionManager instance;
+
+    public IInteractable interactiveObj { get; set; }
+    private PlayerEvents input;
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance == this)
-        {
-            Destroy(gameObject);
-        }
 
-        input = GetComponent<InputManager>();
+        input = GetComponent<PlayerEvents>();
+        input.onInteract.AddListener(Interact);
     }
 
-    void Update()
+     void Update()
     {
-        if (interactiveObj)
+        if (HasInteractions())
         {
-             interactiveObj.GetComponent<SpriteRenderer>().color = Color.red;
+            interactiveObj.Highlight();
         }
-        //if (input.interactPressed)
-        //{
-        //    Debug.Log("O pressed");
-        //    if (interactiveObj)
-        //    {
-        //        interactiveObj.GetComponent<IInteractive>().Interact();
-        //    }
-        //}
     }
 
+    public bool HasInteractions()
+    {
+        return interactiveObj != null;
+    }
     public void Interact()
     {
        
-            Debug.Log("O pressed");
             if (interactiveObj)
             {
-                interactiveObj.GetComponent<IInteractive>().Interact();
+                interactiveObj.Interact();
             }
     }
 }

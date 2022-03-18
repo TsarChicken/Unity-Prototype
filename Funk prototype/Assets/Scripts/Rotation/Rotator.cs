@@ -2,40 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
-
-public class Rotator :  IRotator
+using DG.Tweening;
+public class Rotator :  MonoBehaviour
 {
-    Transform rotatable;
-    private float degrees;
-    private LayerMask layer;
-    public Rotator(Transform obj, float degrees, LayerMask layer)
+    [SerializeField] private float rotationTime;
+    private float degrees = 360f;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private bool isTimeFixed = false;
+
+  
+
+    public void HandleRotation(float gravity)
     {
-        this.layer = layer;
-        this.rotatable = obj;
-        this.degrees = degrees;
+        if (isTimeFixed)
+        {
+            StartCoroutine( Rotate());
+        } else
+        {
+           StartCoroutine( Rotate(gravity));
+        }
     }
 
     public IEnumerator Rotate(float gravity)
     {
-        if (degrees == 0f)
-        {
-            degrees = 180f;
-        } else
-        {
-            degrees = 0f;
-        }
         yield return new WaitForSeconds(.075f);
 
         float time = Mathf.Sqrt(2f * GetDistance() / Mathf.Abs(gravity)) / 2f;
-
-        iTween.RotateTo(rotatable.gameObject, new Vector3(0, 0, degrees), time);
-
-
+        transform.DORotate(new Vector3(0, 0, degrees+=180f), time, RotateMode.Fast);
     }
 
+    public IEnumerator Rotate()
+    {
+        yield return new WaitForSeconds(.075f);
+
+        transform.DORotate(new Vector3(0, 0, degrees+=180f), rotationTime, RotateMode.Fast);
+
+    }
     public float GetDistance(LayerMask layer)
     {
-        RaycastHit2D hit = Physics2D.Raycast(rotatable.position, rotatable.up, 180, layer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 180, layer);
         if (hit)
         {
             //Color of debug ray
@@ -44,7 +49,7 @@ public class Rotator :  IRotator
 
             if (hit.collider != null && (layer.value & 1 << hit.collider.gameObject.layer) == 1 << hit.collider.gameObject.layer)
             {
-                Debug.DrawRay(rotatable.transform.position, rotatable.up * hit.distance, color);
+                Debug.DrawRay(transform.transform.position, transform.up * hit.distance, color);
 
                 return hit.distance;
             }
@@ -57,7 +62,7 @@ public class Rotator :  IRotator
 
     public float GetDistance()
     {
-        return GetDistance(layer);
+        return GetDistance(groundLayer);
     }
 
 

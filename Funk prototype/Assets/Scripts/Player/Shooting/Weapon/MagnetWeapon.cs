@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //When getting bullet back, should work like a magnet, with all physics included. Yet to be done
-public class MagnetWeapon : MonoBehaviour, IWeapon
+public class MagnetWeapon : IWeapon
 {
-    private InputManager input;
+    
     private Transform bullet;
-
+    readonly float G = 667.4f;
+    [SerializeField]
+    private EventsChecker playerCheck;
     [SerializeField]
     private float waitBeforeShooting, shootWaitTime, comebackDistance;
-    [SerializeField]
-    private Transform firePoint;
+   
     [SerializeField]
     private GameObject bulletPrefab;
     [SerializeField]
@@ -25,35 +26,24 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
     private float previousAngle = 0f;
 
     private float direction = 1f;
+    private float aimX = 0f, aimY = 0f;
 
-    
-    void Start()
+    private void Start()
     {
-        input = GetComponentInParent<InputManager>();
+        //input = GetComponentInParent<InputManager>();
         weaponToRotate = GetComponent<Transform>();
+        HandleShooting = BringBullet;
+        HandleAiming = Aim;
     }
 
-   
     void Update()
     {
+      
 
-        Debug.DrawRay(firePoint.position, firePoint.right * 300f, Color.green);
-
-        GameObject enemy = Aim();
-        if (enemy)
-        {
-            enemy.GetComponentInChildren<SpriteRenderer>().color = Color.blue;
-        }
-
-        if (input.shootPressed && Time.time > waitBeforeShooting)
-        {
-            Shoot();
-        }
-     
         if (Vector3.Distance(bullet.position, firePoint.position) < comebackDistance)
         {
             bullet.SetParent(firePoint);
-
+            bullet.GetComponent<Rigidbody2D>().AddForce(Vector3.zero);
             isBacktracking = false;
             bullet.position = firePoint.position;
             if (!isShooting)
@@ -62,7 +52,7 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
       
         if (isBacktracking)
         {
-            //Temporary replacement of magnet behaviour
+            
             bullet.position = Vector3.Lerp(bullet.position, firePoint.position, bulletBackSpace * Time.deltaTime);
 
         }
@@ -72,7 +62,26 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
 
     }
 
-    public void Activate()
+    protected override void UpdateAim(Vector2 param)
+    {
+        aimX = param.x;
+        aimY = param.y;
+    }
+
+
+    public override void SwitchFunctional()
+    {
+        if(HandleShooting == TeleportBullet)
+        {
+            HandleShooting = BringBullet;
+        }
+        else
+        {
+            HandleShooting = TeleportBullet;
+        }
+    }
+
+    public override void Activate()
     {
         gameObject.SetActive(true);
         waitBeforeShooting = Time.time + shootWaitTime;
@@ -82,14 +91,24 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
         transform.localPosition = new Vector3(0.485f, -0.06f, 0);
         GetComponent<SpriteRenderer>().color = Color.white;
     }
-    public void Deactivate()
+    public override void Deactivate()
     {
         Destroy(bullet.gameObject);
         gameObject.SetActive(false);
 
     }
 
-    public void Shoot()
+    private void TeleportBullet()
+    {
+        bullet = firePoint;
+    }
+
+    private void BringBullet()
+    {
+        isBacktracking = true;
+    }
+
+    protected override void Fire()
     {
         if (Time.time <= waitBeforeShooting)
             return;
@@ -99,14 +118,14 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
         bullet.GetComponent<BulletMovement>().ClearKinematic();
         if (!(Vector3.Distance(bullet.position, firePoint.position) < comebackDistance))
         {
-            Debug.Log("Backtracking");
+            Debug.Log("Back");
 
-            isBacktracking = true;
+            HandleShooting();
 
         }
         else
         {
-            Debug.Log("Shooting");
+            Debug.Log("Forward");
             isShooting = true;
             bullet.gameObject.GetComponent<BulletMovement>().Move();
         }
@@ -117,12 +136,12 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
     public GameObject Aim()
     {
 
-        
-        float angle = (Mathf.Atan2(input.aim.y, input.aim.x * direction) * Mathf.Rad2Deg) * direction;
-        if (input.aim.x == 0f && input.aim.y == 0f)
+        float angle = (Mathf.Atan2(aimY, aimX * direction) * Mathf.Rad2Deg) * direction;
+        if ((aimY == 0f && aimX == 0f))
             angle = previousAngle;
 
         weaponToRotate.eulerAngles = new Vector3(0, 0, angle);
+
 
         bool check = direction == 1 ? angle > 90 || angle < -90 : !(angle > 90 || angle < -90);
         float y = 0;
@@ -136,7 +155,6 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
         }
         weaponToRotate.transform.localScale = new Vector3(weaponToRotate.transform.localScale.x, y, weaponToRotate.transform.localScale.z);
         previousAngle = angle;
-
         RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right, 300f, enemyLayer);
 
         if (hitInfo)
@@ -145,7 +163,7 @@ public class MagnetWeapon : MonoBehaviour, IWeapon
             return null;
     }
 
-    public void FlipDirection()
+    public override void FlipDirection()
     {
         direction *= -1;
     }

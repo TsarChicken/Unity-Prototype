@@ -5,8 +5,9 @@ using UnityEngine;
 public class GravityManager : MonoBehaviour, IGravityManager
 {
     private MovementManager movement;
-    private InputManager input;
-    
+    private PhysicsInfo info;
+    private PlayerEvents input;
+    private EventsChecker checker;
     public IWeapon weapon { set; private get; }
 
     [SerializeField]   
@@ -15,17 +16,18 @@ public class GravityManager : MonoBehaviour, IGravityManager
 
     void Start()
     {
+        input = GetComponent<PlayerEvents>();
         movement = GetComponent<MovementManager>();
-        input = InputManager.instance;
+        info = GetComponent<PhysicsInfo>();
+        checker = GetComponent<EventsChecker>();
         player = true;
         environment = true;
+        input.onGravitySwitch.AddListener(SwitchGravity);
+        input.onPlayerGravity.AddListener(FlipCharacterPhys);
+        input.onEnvironmentGravity.AddListener(FlipEnvironmentPhys);
     }
 
-    public void AllowSwitch()
-    {
-        if(!canSwitch)
-        canSwitch = true;
-    }
+  
 
     public void FlipCharacterPhys()
     {
@@ -48,14 +50,13 @@ public class GravityManager : MonoBehaviour, IGravityManager
         }
     }
     public void SwitchGravity() {
-        if (!canSwitch)
-            return;
+     
         if (environment || player)
         {
             if (environment && !player)
             {
                 SwitchPhysics();
-                movement.FlipMultipliers();
+                info.FlipMultipliers();
 
             }
             if (!environment && player)
@@ -68,27 +69,25 @@ public class GravityManager : MonoBehaviour, IGravityManager
             {
                 SwitchPhysics();
                 SwitchPlayerController();
-                movement.FlipStandartGravity();
-                movement.FlipJump();
+                info.FlipStandartGravity();
+                info.FlipJump();
             }
         }
 
         StartCoroutine(ClearCanSwitch());
 
     }
+    public void SetCamera(Camera cam)
+    {
+        camera = cam;
+    }
     private IEnumerator ClearCanSwitch()
     {
         yield return new WaitForSeconds(0.15f);
-        canSwitch = false;
+        checker.CanSwitchGravity = false;
 
     }
 
-    IEnumerator AlertGravityChange()
-    {
-        yield return new WaitForSeconds(0.1f);
-        movement.isChangingGravity = true;
-
-    }
 
     public void SwitchPhysics() {
         Physics2D.gravity = new Vector2(Physics2D.gravity.x,
@@ -104,7 +103,7 @@ public class GravityManager : MonoBehaviour, IGravityManager
         camera.RotateCamera();
 
         movement.RotateCharacter();
-
+        
         if(weapon!=null)
             weapon.FlipDirection();
     }

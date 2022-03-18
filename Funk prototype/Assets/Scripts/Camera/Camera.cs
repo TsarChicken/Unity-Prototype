@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class Camera : MonoBehaviour, ICamera
 {
-    [SerializeField] private MovementManager movement;
-    [SerializeField] private float staticDistance;
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private PhysicsInfo movement;
 
-    private IRotator rotator;
+    private Rotator rotator;
 
 
     private void Awake()
     {
-        rotator = new Rotator(transform, 0f, groundLayer);
+        rotator = GetComponent<Rotator>();
     }
 
     public void RotateCamera()
     {
-        StartCoroutine(rotator.Rotate(movement.Multiplier));
-        movement.FlipGroundPhys();
+        rotator.HandleRotation(movement.fallMultiplier);
 
     }
+
 
 }

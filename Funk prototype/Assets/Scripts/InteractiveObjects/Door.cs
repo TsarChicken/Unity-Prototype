@@ -2,18 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class Door : IInteractable
 {
-    [SerializeField]
-    private Vector3 initialSize;
-    void Awake()
-    {
-        initialSize = GetComponent<Transform>().localScale;
-        GetComponentInChildren<Interactive>().act = Close;
-    }
    
-
-
+    public override void Interact()
+    {
+        Close();
+    }
     public void Close()
     {
         StartCoroutine(SetClosed());

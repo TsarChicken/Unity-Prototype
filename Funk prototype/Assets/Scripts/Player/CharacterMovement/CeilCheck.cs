@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CeilCheck : MonoBehaviour
 {
-    MovementManager movement;
+    PhysicsInfo movement;
     private void Awake()
     {
-        movement = GetComponentInParent<MovementManager>();
+        movement = GetComponentInParent<PhysicsInfo>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -24,8 +24,11 @@ public class CeilCheck : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if ((movement.GetGroundLayer().value & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
+        {
+            movement.SetHeadBlocked(false);
+        }
 
-        movement.SetHeadBlocked(false);
 
 
     }

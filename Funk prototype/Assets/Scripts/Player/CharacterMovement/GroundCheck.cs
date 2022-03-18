@@ -5,10 +5,10 @@ using UnityEngine;
 public class GroundCheck : MonoBehaviour
 {
 
-    MovementManager movement;
+    PhysicsInfo movement;
     private void Awake()
     {
-        movement = GetComponentInParent<MovementManager>();
+        movement = GetComponentInParent<PhysicsInfo>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,7 +17,7 @@ public class GroundCheck : MonoBehaviour
         {
             movement.SetOnGround(true);
         }
-       
+        movement.currentSpeed = movement.moveSpeed;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

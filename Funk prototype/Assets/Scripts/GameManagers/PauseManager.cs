@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseManager : MonoBehaviour
+public class PauseManager : Singleton<PauseManager>
 {
     [SerializeField]
     private PlayerEvents input;
+   
     private void OnEnable()
     {
+        input = PlayerInfo.instance.GetComponent<PlayerEvents>();
+
         input.onPause.AddListener(Pause);
     }
 

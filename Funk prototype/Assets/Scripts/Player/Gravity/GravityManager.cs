@@ -11,8 +11,24 @@ public class GravityManager : MonoBehaviour, IGravityManager
     public IWeapon weapon { set; private get; }
 
     [SerializeField]   
-    private bool player, environment, canSwitch;
-    [SerializeField] Camera camera;
+    private bool player, environment;
+    public bool Player { private set {
+            player = value;
+        } get
+        {
+            return player;
+        }
+    }
+    public bool Environment{
+        private set {
+            environment = value;
+        } get
+        {
+            return environment;
+        }
+    }
+
+    [SerializeField] CameraScript camera;
 
     void Start()
     {
@@ -20,8 +36,8 @@ public class GravityManager : MonoBehaviour, IGravityManager
         movement = GetComponent<MovementManager>();
         info = GetComponent<PhysicsInfo>();
         checker = GetComponent<EventsChecker>();
-        player = true;
-        environment = true;
+        Player = true;
+        Environment = true;
         input.onGravitySwitch.AddListener(SwitchGravity);
         input.onPlayerGravity.AddListener(FlipCharacterPhys);
         input.onEnvironmentGravity.AddListener(FlipEnvironmentPhys);
@@ -31,41 +47,45 @@ public class GravityManager : MonoBehaviour, IGravityManager
 
     public void FlipCharacterPhys()
     {
-        player = !player;
+        Player = !Player;
         MakeAmends();
+       
+
     }
 
     public void FlipEnvironmentPhys()
     {
-        environment = !environment;
+        Environment = !Environment;
         MakeAmends();
     }
 
     private void MakeAmends()
     {
-        if (!player && !environment)
+        if (!Player && !Environment)
         {
-            player = true;
-            environment = true;
+            Player = true;
+            Environment = true;
         }
+        GravityLights.instance.PlayerView();
+        GravityLights.instance.EnvironmentView();
     }
     public void SwitchGravity() {
      
-        if (environment || player)
+        if (Environment || Player)
         {
-            if (environment && !player)
+            if (Environment && !Player)
             {
                 SwitchPhysics();
                 info.FlipMultipliers();
 
             }
-            if (!environment && player)
+            if (!Environment && Player)
             {
 
                 SwitchPlayerPhysics();
                 SwitchPlayerController();
             }
-            if (environment && player)
+            if (Environment && player)
             {
                 SwitchPhysics();
                 SwitchPlayerController();
@@ -77,7 +97,7 @@ public class GravityManager : MonoBehaviour, IGravityManager
         StartCoroutine(ClearCanSwitch());
 
     }
-    public void SetCamera(Camera cam)
+    public void SetCamera(CameraScript cam)
     {
         camera = cam;
     }
@@ -90,8 +110,9 @@ public class GravityManager : MonoBehaviour, IGravityManager
 
 
     public void SwitchPhysics() {
-        Physics2D.gravity = new Vector2(Physics2D.gravity.x,
-            -Physics2D.gravity.y);
+        PhysicsDataManager.instance.FlipGravity();
+        //Physics2D.gravity = new Vector2(Physics2D.gravity.x,
+        //    -Physics2D.gravity.y);
     }
     public void SwitchPlayerPhysics()
     {
@@ -100,12 +121,12 @@ public class GravityManager : MonoBehaviour, IGravityManager
 
     public void SwitchPlayerController()
     {
-        camera.RotateCamera();
+        //camera.RotateCamera();
 
         movement.RotateCharacter();
         
-        if(weapon!=null)
-            weapon.FlipDirection();
+        //if(weapon!=null)
+        //    weapon.FlipDirection();
     }
 
 }

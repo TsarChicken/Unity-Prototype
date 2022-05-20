@@ -5,62 +5,61 @@ using System;
 
 public abstract class IWeapon: MonoBehaviour
 {
+   
+    public Aim currentAim { get; protected set; }
 
-    [SerializeField] protected float distance;
+    public Shoot currentShoot { get; protected set; }
+
+    public Transform firepoint { get; set; }
 
     [SerializeField]
-    public Transform firePoint;
-    protected GameObject currentEnemy;
+    protected Aim standartAim;
 
     [SerializeField]
-    protected PlayerEvents input;
-    void FixedUpdate()
+    protected Shoot standartShoot;
+
+    protected PlayerEvents player;
+
+    [SerializeField]
+    protected IBullet bulletPrefab;
+
+    public IBullet bullet
     {
-        Debug.DrawRay(firePoint.position, firePoint.right * distance, Color.green);
-       
-        GameObject enemy = HandleAiming();
-        if (enemy != currentEnemy)
+        get
         {
-            if (currentEnemy)
-            {
-                currentEnemy.GetComponentInChildren<SpriteRenderer>().material = MaterialsHolder.instance.defaultMaterial;
-            }
+            return bulletPrefab;
         }
-        if (enemy)
+        set
         {
-
-            enemy.GetComponentInChildren<SpriteRenderer>().material = MaterialsHolder.instance.hologramMaterial;
-            currentEnemy = enemy;
-
-
+            bulletPrefab = value;
         }
     }
+    public abstract void SwitchMode();
 
-    public delegate void Shooting();
-    public delegate GameObject Aiming();
-    public Shooting HandleShooting;
-    public Aiming HandleAiming;
-
-    private void OnEnable()
+    public bool CanFire
     {
-        input.onFire.AddListener(Fire);
-        input.onAim.AddListener(UpdateAim);
-        input.onFireModeSwitch.AddListener(SwitchFunctional);
+        get
+        {
+            return currentShoot.CanFire;
+        }
     }
 
-    private void OnDisable()
+    protected virtual void Awake()
     {
-        input.onFire.RemoveListener(Fire);
-        input.onAim.RemoveListener(UpdateAim);
-        input.onFireModeSwitch.RemoveListener(SwitchFunctional);
-
+        currentAim = standartAim;
+        currentShoot = standartShoot;
+        player = GetComponentInParent<PlayerEvents>();
+        firepoint = transform.Find("Firepoint");
     }
-    protected abstract void Fire();
-    protected abstract void UpdateAim(Vector2 param);
-    public abstract void FlipDirection();
-    public abstract void Activate();
-
-    public abstract void SwitchFunctional();
-    public abstract void Deactivate();
+    protected virtual void OnEnable()
+    {
+        player.onFireModeSwitch.AddListener(SwitchMode);
+        bullet.SetWeaponUsed(this);
+    }
+    protected virtual void OnDisable()
+    {
+        player.onFireModeSwitch.RemoveListener(SwitchMode);
+    }
+  
 
 }

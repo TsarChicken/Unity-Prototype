@@ -18,7 +18,7 @@ public class InteractionManager : MonoBehaviour
     {
         if (HasInteractions())
         {
-            interactiveObj.Highlight();
+            interactiveObj.HighlightActive();
         }
     }
 

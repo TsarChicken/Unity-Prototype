@@ -5,23 +5,21 @@ using UnityEngine;
 public class EventsChecker : MonoBehaviour
 {
 
-    private PhysicsInfo physics;
-    private WeaponManager weapons;
-    private InteractionManager interactions;
-
+   
+    private PlayerInfo player;
 
     private void Awake()
     {
-        physics = GetComponent<PhysicsInfo>();
-        weapons = GetComponent<WeaponManager>();
-        interactions = GetComponent<InteractionManager>();
+       
+        player = GetComponent<PlayerInfo>();
     }
 
     
     public bool CanFire {
         get
         {
-            return weapons.HasActiveWeapon();
+            
+            return player.Weapons.CanCurrentWeaponFire;
         }
     }
 
@@ -29,7 +27,7 @@ public class EventsChecker : MonoBehaviour
     {
         get
         {
-            return physics.SuitsJump();
+            return player.PlayerPhysics.SuitsJump();
         }
     }
 
@@ -37,15 +35,25 @@ public class EventsChecker : MonoBehaviour
     {
         get
         {
-            return interactions.HasInteractions();
+            return player.Interactions.HasInteractions();
         }
     }
 
+    private bool canSwitchGravity;
     public bool CanSwitchGravity
     {
-        set; get;
+        set
+        {
+            canSwitchGravity = value;
+        }
+        get
+        {
+            return canSwitchGravity && LevelManager.instance.currentRoom.CanSwitchGravity;
+        }
 
     }
+
+    
 
     public bool CanCrouch
     {
@@ -62,25 +70,34 @@ public class EventsChecker : MonoBehaviour
     {
         get
         {
-            return weapons.HasWeapon();
+            return player.Weapons.HasWeapon();
         }
 
     }
-
+   
     public bool CanFireMode
     {
-        set; get;
+        get
+        {
+            return player.Weapons.HasActiveWeapon();
+        }
 
     }
 
     public bool CanMelee
     {
-        set; get;
+        get
+        {
+            return player.PlayerPhysics.isOnGround;
+        }
 
     }
     public bool CanTrajectory
     {
-        set; get;
+        get
+        {
+            return player.Weapons.HasActiveWeapon();
+        }
     }
 
 }

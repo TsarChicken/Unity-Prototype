@@ -3,34 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : IControllable
+public class InputManager :IControllable
 {
     private RestrictionManager restrictor;
 
     private PlayerEvents playerEvents;
 
     private EventsChecker checker;
+
+    private PlayerInput input;
+
+    private bool isBlocked = false;
     private void Start()
     {
-        restrictor = RestrictionManager.Instance;
+        restrictor = RestrictionManager.instance;
         playerEvents = GetComponent<PlayerEvents>();
         checker = GetComponent<EventsChecker>();
+        input = GetComponent<PlayerInput>();
     }
 
+    //public override void TakeControl()
+    //{
+    //    playerEvents.enabled = false;
+    //}
+
+    public override void Block()
+    {
+        isBlocked = true;
+    }
+
+    public override void Unblock()
+    {
+        isBlocked = false;
+    }
+    //private void OnEnable()
+    //{
+    //    input.enabled = true;
+    //}
+    //private void OnDisable()
+    //{
+    //    input.enabled = false;
+
+    //}
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (playerEvents.onMove.IsEmpty())
+        if (playerEvents.onMove.IsEmpty() || isBlocked)
         {
-            restrictor.Restrict();
             return;
         }
         playerEvents.onMove.Invoke(context.ReadValue<Vector2>());
     }
     public void OnAim(InputAction.CallbackContext context)
     {
-        if (playerEvents.onAim.IsEmpty() )
+        if (playerEvents.onAim.IsEmpty() || isBlocked )
         {
-            restrictor.Restrict();
             return;
         }
         playerEvents.onAim.Invoke(context.ReadValue<Vector2>());
@@ -42,7 +68,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onFire.IsEmpty() || checker.CanFire == false)
+        if (playerEvents.onFire.IsEmpty() || checker.CanFire == false || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -59,7 +85,7 @@ public class InputManager : IControllable
             return;
         }
 
-        if (playerEvents.onJump.IsEmpty() ||checker.CanJump == false)
+        if (playerEvents.onJump.IsEmpty() ||checker.CanJump == false || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -76,7 +102,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onInteract.IsEmpty() || checker.CanInteract == false)
+        if (playerEvents.onInteract.IsEmpty() || checker.CanInteract == false || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -90,7 +116,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onGravitySwitch.IsEmpty() || checker.CanSwitchGravity == false)
+        if (playerEvents.onGravitySwitch.IsEmpty() || checker.CanSwitchGravity == false || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -104,7 +130,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onPlayerGravity.IsEmpty())
+        if (playerEvents.onPlayerGravity.IsEmpty() || checker.CanSwitchGravity == false || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -118,7 +144,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onEnvironmentGravity.IsEmpty())
+        if (playerEvents.onEnvironmentGravity.IsEmpty() || checker.CanSwitchGravity == false || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -132,7 +158,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onCrouch.IsEmpty() )
+        if (playerEvents.onCrouch.IsEmpty() || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -147,7 +173,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onHighlight.IsEmpty())
+        if (playerEvents.onHighlight.IsEmpty() || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -161,7 +187,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onWeaponSwitch.IsEmpty())
+        if (playerEvents.onWeaponSwitch.IsEmpty() || checker.CanDrawWeapon == false || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -175,7 +201,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onFireModeSwitch.IsEmpty() )
+        if (playerEvents.onFireModeSwitch.IsEmpty() || checker.CanFireMode == false || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -189,7 +215,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onMelee.IsEmpty() )
+        if (playerEvents.onMelee.IsEmpty() || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -203,7 +229,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onTrajectory.IsEmpty())
+        if (playerEvents.onTrajectory.IsEmpty() || isBlocked)
         {
             restrictor.Restrict();
             return;
@@ -216,7 +242,7 @@ public class InputManager : IControllable
         {
             return;
         }
-        if (playerEvents.onPause.IsEmpty())
+        if (playerEvents.onPause.IsEmpty() || isBlocked)
         {
             restrictor.Restrict();
             return;

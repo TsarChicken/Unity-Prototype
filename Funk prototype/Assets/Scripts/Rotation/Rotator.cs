@@ -10,8 +10,12 @@ public class Rotator :  MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private bool isTimeFixed = false;
 
-  
 
+
+    private void Update()
+    {
+        
+    }
     public void HandleRotation(float gravity)
     {
         if (isTimeFixed)
@@ -28,15 +32,17 @@ public class Rotator :  MonoBehaviour
         yield return new WaitForSeconds(.075f);
 
         float time = Mathf.Sqrt(2f * GetDistance() / Mathf.Abs(gravity)) / 2f;
-        transform.DORotate(new Vector3(0, 0, degrees+=180f), time, RotateMode.Fast);
+        //transform.DORotate(new Vector3(0, 0, (transform.rotation.z * 180) + 180f), time, RotateMode.Fast);
+        transform.DOBlendableRotateBy(new Vector3(0, 0, 180f), time);
+
     }
 
     public IEnumerator Rotate()
     {
         yield return new WaitForSeconds(.075f);
 
-        transform.DORotate(new Vector3(0, 0, degrees+=180f), rotationTime, RotateMode.Fast);
-
+        //transform.DORotate(new Vector3(0, 0, (transform.rotation.z * 180) + 180f), rotationTime, RotateMode.Fast);
+        transform.DOBlendableRotateBy(new Vector3(0, 0, 180f), rotationTime);
     }
     public float GetDistance(LayerMask layer)
     {

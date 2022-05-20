@@ -2,23 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Experimental.Rendering.Universal;
+
 public class Room : MonoBehaviour
 {
+    CameraScript camera;
+
+    private Transform gravityLights;
+
+    private PlayerInfo player;
     [SerializeField]
-    GameObject camera;
-    
+    private bool canSwitchGravity = true;
+    public bool CanSwitchGravity
+    {
+        get
+        {
+            return canSwitchGravity;
+        }
+    }
+    private void Awake()
+    {
+        player = PlayerInfo.instance;
+        camera = GetComponentInChildren<CameraScript>();
+        camera.gameObject.SetActive(false);
+        gravityLights = transform.Find("GravityLights");
+        canSwitchGravity = gravityLights != null;
+        print(gravityLights);
+        
+    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             print("left");
 
+
             //camera.gameObject.SetActive(false);
 
-            camera.SetActive(false);
 
-                //StartCoroutine(CloseDelay());
-            
         }
     }
 
@@ -28,9 +49,25 @@ public class Room : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             print("entered");
+            player = collision.GetComponent<PlayerInfo>();
+            camera.SetPlayer();
+            LevelManager.instance.UpdateCamera(camera);
+            //camera.gameObject.SetActive(true);
+            player.Gravity.SetCamera(camera.GetComponent<CameraScript>());
 
-            camera.SetActive(true);
-            collision.GetComponent<GravityManager>().SetCamera(camera.GetComponent<Camera>());
+            LevelManager.instance.currentRoom = this;
+
+            if (canSwitchGravity == false)
+            {
+                GravityLights.instance.ClearLights();
+            }
+            else
+            {
+                GravityLights.instance.locationLights = gravityLights;
+                GravityLights.instance.PlayerView();
+                GravityLights.instance.EnvironmentView();
+
+            }
         }
     }
 

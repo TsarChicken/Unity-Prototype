@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DamageVariants
-{
-   Low,
-   Medium,
-   High, 
-   Max
-}
-public class Melee : MonoBehaviour
+public class Melee : MonoBehaviour, IEventObservable
 {
     [SerializeField]
-    DamageVariants damageVariant = DamageVariants.Medium;
+    DamageType damageVariant = DamageType.Medium;
     private PlayerEvents input;
     [SerializeField]
     private LayerMask interactiveLayers;
@@ -24,13 +17,13 @@ public class Melee : MonoBehaviour
     {
         input = GetComponent<PlayerEvents>();
     }
-    private void OnEnable()
+    public void OnEnable()
     {
         input.onMelee.AddListener(Fight);
 
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         input.onMelee.RemoveListener(Fight);
     }
@@ -46,25 +39,11 @@ public class Melee : MonoBehaviour
                 var stunner = obj.GetComponent<Stunner>();
                 stunner.onStun.Invoke();
             }
-            if (obj.CompareTag("Destructable"))
-            {
-                var health = obj.GetComponent<Health>();
-                switch (damageVariant)
-                {
-                    case DamageVariants.Low:
-                        health.LowDamage();
-                        break;
-                    case DamageVariants.Medium:
-                        health.MediumDamage();
-                        break;
-                    case DamageVariants.High:
-                        health.HighDamage();
-                        break;
-                    case DamageVariants.Max:
-                        health.MaxDamage();
-                        break;
-                }
-            }
+            //if (obj.CompareTag("Destructable"))
+            //{
+            //    var health = obj.GetComponent<Health>();
+            //    DamageManager.instance.DamageObject(damageVariant, health);
+            //}
         }
     }
 }

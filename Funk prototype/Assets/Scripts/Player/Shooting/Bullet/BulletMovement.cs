@@ -4,105 +4,90 @@ using UnityEngine;
 
 public class BulletMovement : MonoBehaviour
 {
-    public float speed = 20f;
-    public Rigidbody2D rb { get; set; }
-    public LayerMask collisionLayer;
-    public LayerMask playerLayer;
+    //public float speed = 20f;
+    //public Rigidbody2D rb { get; set; }
+    //public LayerMask collisionLayer;
+    //public LayerMask playerLayer;
 
-    MagnetWeapon weaponScr;
+    //MagnetWeapon weaponScr;
 
-    Vector3 mPrevPos;
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
+    //Vector3 mPrevPos;
 
-        mPrevPos = transform.position;
-    }
-    public void Move()
-    {
-        if (transform.parent != null)
-            rb.velocity = transform.parent.transform.right * speed;
+    //public TargetJoint2D targetJoint { get; set; }
 
-    }
-  
-    private void FixedUpdate()
-    {
-        //To avoid bullet getting through objects because of high speed, we check it's potential position
-
-        if (weaponScr.isShooting)
-        {
-
-            RaycastHit2D hit = Physics2D.Raycast(mPrevPos, transform.right, (transform.position - mPrevPos).magnitude, collisionLayer);
-
-
-            if (hit)
-            {
-                Health hitHP = hit.transform.gameObject.GetComponent<Health>();
-                //for now, the bullet keeps moving if it kills an object
-                if (hitHP)
-                {
-                    hitHP.MediumDamage();
-                    if (!hitHP.IsDead())
-                    {
-                        Stop(hit);
-                    }
-                }
-                else
-
-                    Stop(hit);
-            }
-
-        }
-        //if (weaponScr.isBacktracking)
-        //{
-        //    Vector2 direction = (Vector2)weaponScr.firePoint.position - rb.position;
-        //    RaycastHit2D hit = Physics2D.Raycast(mPrevPos, direction, (transform.position - mPrevPos).magnitude, playerLayer);
-        //    if (hit)
-        //    {
-
-        //    }
-        //}
-       
-        mPrevPos = transform.position;
-
-
-    }
-
-    //void Attract(Rigidbody2D rb)
+    //private Vector3 localScale;
+    //void Awake()
     //{
+    //    rb = GetComponent<Rigidbody2D>();
 
-    //    Vector3 direction = firePoint.position - (Vector3)rb.position;
-    //    float distance = direction.magnitude;
+    //    mPrevPos = transform.position;
+    //    targetJoint = GetComponent<TargetJoint2D>();
+    //    localScale = transform.lossyScale;
+    //}
+    //public void Move()
+    //{
+    //    targetJoint.enabled = false;
 
-    //    float forceMagnitude = G / Mathf.Pow(distance, 2);
-    //    Vector3 force = direction.normalized * forceMagnitude;
-
-    //    rb.AddForce(force);
+    //    if (transform.parent != null)
+    //    {
+    //        rb.velocity = transform.parent.transform.right * speed;
+    //        transform.parent = null;
+    //    }
+    //}
+  
+    //public void ClearKinematic()
+    //{
+    //    rb.isKinematic = false;
     //}
 
-    public void ClearKinematic()
-    {
-        rb.isKinematic = false;
-    }
+    //private void Stop(RaycastHit2D hit)
+    //{
+    //    print("Bullet Collides");
+    //    rb.velocity = Vector3.zero;
+    //    weaponScr.isShooting = false;
 
-    private void Stop(RaycastHit2D hit)
-    {
-        print("Bullet Collides");
-        rb.velocity = Vector3.zero;
-        weaponScr.isShooting = false;
+    //    //make the bullet stick to its collision
+    //    transform.parent = hit.transform;
+    //    transform.position = hit.point;
+    //    rb.isKinematic = true;
+    //}
+    //private void Stop(Transform newParent)
+    //{
+    //    print("Bullet Collides");
+    //    rb.velocity = Vector3.zero;
+    //    weaponScr.isShooting = false;
+    //    transform.parent = newParent;
+    //    rb.isKinematic = true;
 
-        //make the bullet stick to its collision
-        transform.parent = hit.transform;
-        transform.position = hit.point;
-        rb.isKinematic = true;
-    }
-    public void SetParent(Transform weapon, MagnetWeapon script)
-    {
-        transform.SetParent(weapon);
-        weaponScr = script;
-    }
+    //}
+    //public void SetParent(Transform weapon, MagnetWeapon script)
+    //{
+    //    transform.SetParent(weapon);
+    //    weaponScr = script;
+    //}
 
-    
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collisionLayer.value == (collisionLayer | (1 << collision.gameObject.layer)))
+    //    {
+    //        //Debug.Log("Layer is in layer mask");
+    //        //Stop(collision.transform);
+    //        Health hitHP = collision.gameObject.GetComponent<Health>();
+    //        //for now, the bullet keeps moving if it kills an object
+    //        if (hitHP)
+    //        {
+    //            hitHP.MediumDamage();
+    //            if (!hitHP.IsDead())
+    //            {
+    //                Stop(collision.transform);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Stop(collision.transform);
+    //        }
+    //    }
+    //}
 
 }
 

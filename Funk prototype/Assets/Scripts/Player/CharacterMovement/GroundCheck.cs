@@ -10,8 +10,12 @@ public class GroundCheck : MonoBehaviour
     {
         movement = GetComponentInParent<PhysicsInfo>();
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
+        if (movement.isOnGround)
+        {
+            return;
+        }
        
         if ((movement.GetGroundLayer().value & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
         {

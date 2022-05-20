@@ -17,15 +17,7 @@ public class MovementManager : MonoBehaviour
 
     private PhysicsInfo physicsInfo;
 
-
-
-   
     private GravityManager gravity;
-
-   
-
-
-    
 
     void Awake()
     {
@@ -79,11 +71,7 @@ public class MovementManager : MonoBehaviour
     }
 
 
-    public void MoveSlowly()
-    {
-       physicsInfo.currentSpeed *= physicsInfo.slowModifier;
-    }
-
+ 
     public void HandleCrouch()
     {
         if (physicsInfo.isCrouching)
@@ -99,7 +87,7 @@ public class MovementManager : MonoBehaviour
     {
         if (physicsInfo.isHeadBlocked)
         {
-            RestrictionManager.Instance.Restrict();
+            RestrictionManager.instance.Restrict();
             return;
         }
         physicsInfo.isCrouching = false;
@@ -125,7 +113,7 @@ public class MovementManager : MonoBehaviour
     public void MoveCharacter()
     {
         float targetSpeed = physicsInfo.currentSpeed * controlDirection * transform.right.x;
-       
+
         float speedDif = targetSpeed - rb.velocity.x;
         float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? physicsInfo.acceleration : physicsInfo.decceleration;
 

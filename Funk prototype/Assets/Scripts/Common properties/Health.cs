@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Health : MonoBehaviour
 {
@@ -8,29 +9,22 @@ public class Health : MonoBehaviour
     
     [SerializeField]
     private float hp = 100;
-    [SerializeField] 
-    private float lowDam, mediumDam, highDam;
-  
-    public void LowDamage()
+
+    private DeathLifeManager deathLifeManager;
+    public Rigidbody2D rb { get; set; }
+
+    private void Awake()
     {
-        hp -= lowDam;
-        Die();
-
+        rb = GetComponent<Rigidbody2D>();
+        deathLifeManager = GetComponent<DeathLifeManager>();
     }
-    public void MediumDamage()
+    public void Damage(float damPoints)
     {
-        hp -= mediumDam;
+        hp -= damPoints;
+        UpdateGamepadRumble();
         Die();
-
     }
-
-    public void HighDamage()
-    {
-        hp -= highDam;
-        Die();
-
-    }
-
+    
     public void MaxDamage()
     {
         hp -= hp;
@@ -41,9 +35,18 @@ public class Health : MonoBehaviour
         return hp <= 0;
     }
 
-    public void Die()
+    private void Die()
     {
         if (IsDead())
             gameObject.SetActive(false);
+            //deathLifeManager.SetDead();
+    }
+    private void UpdateGamepadRumble()
+    {
+
+        if (TryGetComponent(out Rumbler rumble) && hp <= 40)
+        {
+            rumble.IncreaseNonStop();
+        }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Rumble Data", menuName = "Rumble")]
 public class RumbleData : ScriptableObject
 {
+    public bool isNonStop;
     public RumblePattern pattern;
     [Range (0f, 1f)]
     public float lowStart;

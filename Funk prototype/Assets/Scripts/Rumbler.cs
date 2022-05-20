@@ -21,7 +21,18 @@ public class Rumbler : MonoBehaviour
     private float highStep;
     private float rumbleStep;
     private bool isMotorActive = false;
-    
+
+    [SerializeField]
+    private float nonStopStep = 0f;
+    [SerializeField]
+    private float minNonStopLowA = .1f;
+    [SerializeField]
+    private float minNonStopHighA = .1f;
+    [SerializeField]
+    private float nonStopModifier = 1.5f;
+
+    private float currentNonStopLowA = 0.1f;
+    private float currentNonStopHighA = 0.1f;
 
     // Public Methods
     public void RumbleConstant(float low, float high, float duration)
@@ -64,7 +75,24 @@ public class Rumbler : MonoBehaviour
         }
     }
 
+    public void RumbleNonStop(Gamepad gp)
+    {
+        if (gp == null)
+            return;
+        gp.SetMotorSpeeds(currentNonStopLowA, currentNonStopHighA);
+    }
 
+    public void IncreaseNonStop()
+    {   if(currentNonStopHighA == 0 || currentNonStopLowA == 0)
+        {
+            currentNonStopHighA = minNonStopHighA;
+            currentNonStopLowA = minNonStopLowA;
+        } else
+        {
+            currentNonStopHighA *= nonStopModifier;
+            currentNonStopLowA *= nonStopModifier;
+        }
+    }
     // Unity MonoBehaviors
     private void Awake()
     {
@@ -73,58 +101,67 @@ public class Rumbler : MonoBehaviour
 
     private void Update()
     {
+        var gamepad = GetGamepad();
+
+
+
         if (Time.time > rumbleDurration)
         {
+
             StopRumble();
             return;
         }
 
-        var gamepad = GetGamepad();
-        if (gamepad == null)
-        {
-            return;
+            if (gamepad == null)
+            {
+                return;
+            }
+            switch (activeRumblePattern)
+            {
+                case RumblePattern.Constant:
+                    gamepad.SetMotorSpeeds(lowA, highA);
+                    break;
 
-        }
+                case RumblePattern.Pulse:
 
-        switch (activeRumblePattern)
-        {
-            case RumblePattern.Constant:
-                gamepad.SetMotorSpeeds(lowA, highA);
-                break;
-
-            case RumblePattern.Pulse:
-
-                if (Time.time > pulseDurration)
-                {
-                    isMotorActive = !isMotorActive;
-                    pulseDurration = Time.time + rumbleStep;
-                    if (!isMotorActive)
+                    if (Time.time > pulseDurration)
                     {
-                        gamepad.SetMotorSpeeds(0, 0);
+                        isMotorActive = !isMotorActive;
+                        pulseDurration = Time.time + rumbleStep;
+                        if (!isMotorActive)
+                        {
+                            gamepad.SetMotorSpeeds(0, 0);
+                        }
+                        else
+                        {
+                            gamepad.SetMotorSpeeds(lowA, highA);
+                        }
                     }
-                    else
-                    {
-                        gamepad.SetMotorSpeeds(lowA, highA);
-                    }
-                }
 
-                break;
-            case RumblePattern.Linear:
-                gamepad.SetMotorSpeeds(lowA, highA);
-                lowA += (lowStep * Time.deltaTime);
-                highA += (highStep * Time.deltaTime);
-                break;
-            default:
-                break;
-        }
+                    break;
+                case RumblePattern.Linear:
+                    gamepad.SetMotorSpeeds(lowA, highA);
+                    lowA += (lowStep * Time.deltaTime);
+                    highA += (highStep * Time.deltaTime);
+                    break;
+                default:
+                    break;
+            }
+        
     }
 
+    
     private void OnDestroy()
     {
         StopAllCoroutines();
         StopRumble();
     }
+    private void OnDisable()
+    {
 
+        StopAllCoroutines();
+        StopRumble();
+    }
     // Private helpers
 
     private Gamepad GetGamepad()

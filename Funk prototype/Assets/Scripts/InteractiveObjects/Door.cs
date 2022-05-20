@@ -9,7 +9,7 @@ public class Door : IInteractable
     {
         Close();
     }
-    public void Close()
+    private void Close()
     {
         StartCoroutine(SetClosed());
     }
@@ -20,6 +20,5 @@ public class Door : IInteractable
         GetComponent<Transform>().localScale = Vector3.zero;
         yield return new WaitForSeconds(3f);
         GetComponent<Transform>().localScale = initialSize ;
-        GetComponentInChildren<Interactive>().enabled = true;
     }
 }

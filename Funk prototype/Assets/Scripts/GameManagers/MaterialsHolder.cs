@@ -2,22 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MaterialsHolder : MonoBehaviour
+public class MaterialsHolder : Singleton<MaterialsHolder>
 {
-    public static MaterialsHolder instance;
     public Material defaultMaterial;
     public Material hologramMaterial;
     public Material dissolveMaterial;
-    public Material outlineMaterial;
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance == this)
-        {
-            Destroy(gameObject);
-        }
-    }
+    public Material inactiveOutlineMaterial;
+    public Material activeOutlineMaterial;
+
 }

@@ -10,13 +10,14 @@ public class Stunner : MonoBehaviour
     private float stunTime;
     private void Start()
     {
-        behaviour = GetComponent<InputManager>();
+        behaviour = GetComponent<IControllable>();
         onStun.AddListener(StunBehaviour);
         onStun.AddListener(StunView);
     }
 
     void StunBehaviour()
     {
+        print("STUNNED");
         StartCoroutine(Delay());
     }
     void StunView()
@@ -25,9 +26,11 @@ public class Stunner : MonoBehaviour
     }
     IEnumerator Delay()
     {
-        behaviour.enabled = false;
+        behaviour.ControlView();
+        behaviour.Block();
         
         yield return new WaitForSeconds(stunTime);
-        behaviour.enabled = true;
+
+        behaviour.Unblock();
     }
 }

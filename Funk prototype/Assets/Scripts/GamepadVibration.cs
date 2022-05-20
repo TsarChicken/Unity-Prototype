@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GamepadVibration : MonoBehaviour
+public class GamepadVibration : MonoBehaviour, IEventObservable
 {
     private Rumbler rumbler;
     private PlayerEvents input;
@@ -21,7 +21,7 @@ public class GamepadVibration : MonoBehaviour
         rumbler = GetComponent<Rumbler>();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         input.onJump.AddListener(Jump);
         input.onFire.AddListener(Shoot);
@@ -30,7 +30,7 @@ public class GamepadVibration : MonoBehaviour
 
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         input.onJump.RemoveListener(Jump);
         input.onFire.RemoveListener(Shoot);

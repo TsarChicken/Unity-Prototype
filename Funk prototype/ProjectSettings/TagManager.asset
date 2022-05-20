@@ -5,6 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Main Camera
+  - Bullet
+  - Background
+  - Background Platform
+  - Character
+  - Interactive Object
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -12,13 +19,13 @@ TagManager:
   - BackGround
   - Water
   - UI
-  - Player
+  - Backgound Platform
+  - Ground
+  - Character
   - Enemy
-  - LocationBorders
-  - Camera
-  - Destrutable
-  - 
-  - 
+  - Untouchable Item
+  - Interactive Object
+  - Player Only
   - 
   - 
   - 
@@ -48,9 +55,12 @@ TagManager:
   - name: Background Objects
     uniqueID: 4025577703
     locked: 0
-  - name: Interactive Background Objects
+  - name: Middleground
     uniqueID: 1054916981
     locked: 0
   - name: Characters
     uniqueID: 1569879547
+    locked: 0
+  - name: Foreground
+    uniqueID: 124213149
     locked: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7414883697624602739}
   - component: {fileID: 7414883697624602736}
   - component: {fileID: 1184145792}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7414883697624602737}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
   m_Name: 
@@ -110,7 +110,7 @@ MonoBehaviour:
   - {x: -0.51023215, y: 0.51188505, z: 0}
   m_ShapePathHash: -817451543
   m_Mesh: {fileID: 0}
-  m_InstanceId: 43870
+  m_InstanceId: -1398
 --- !u!1001 &7414883696646193530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -121,7 +121,7 @@ PrefabInstance:
     - target: {fileID: 1677072820506811044, guid: e439aa582d2fd574a9d1e0694d46b111, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 0da22e1ed2057194bbf53984ba0fcf85, type: 2}
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 1677072820506811045, guid: e439aa582d2fd574a9d1e0694d46b111, type: 3}
       propertyPath: m_Size.y
       value: 1.4511662
@@ -137,6 +137,10 @@ PrefabInstance:
     - target: {fileID: 1677072820506811047, guid: e439aa582d2fd574a9d1e0694d46b111, type: 3}
       propertyPath: m_Name
       value: Pickable Magnet
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677072820506811047, guid: e439aa582d2fd574a9d1e0694d46b111, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1677072820506811050, guid: e439aa582d2fd574a9d1e0694d46b111, type: 3}
       propertyPath: weapon
@@ -205,11 +209,29 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1677072820506811046, guid: e439aa582d2fd574a9d1e0694d46b111, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e439aa582d2fd574a9d1e0694d46b111, type: 3}
+--- !u!1 &8187787904729996253 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1677072820506811047, guid: e439aa582d2fd574a9d1e0694d46b111, type: 3}
+  m_PrefabInstance: {fileID: 7414883696646193530}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8187787904729996241 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1677072820506811051, guid: e439aa582d2fd574a9d1e0694d46b111, type: 3}
   m_PrefabInstance: {fileID: 7414883696646193530}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &723968692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8187787904729996253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9816c2b52cd18cd4ab020437ee02f51b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 0}
 --- !u!1001 &7414883697819283384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -229,6 +251,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: -0.26675758
       objectReference: {fileID: 0}
+    - target: {fileID: 2279061568931807210, guid: 0464a26ec035f594cbcd9d8357080f25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0da22e1ed2057194bbf53984ba0fcf85, type: 2}
     - target: {fileID: 2279061568931807211, guid: 0464a26ec035f594cbcd9d8357080f25, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -297,11 +323,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pickable Aim
       objectReference: {fileID: 0}
+    - target: {fileID: 2279061568931807223, guid: 0464a26ec035f594cbcd9d8357080f25, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2279061568931807208, guid: 0464a26ec035f594cbcd9d8357080f25, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0464a26ec035f594cbcd9d8357080f25, type: 3}
+--- !u!1 &8738723821155438671 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2279061568931807223, guid: 0464a26ec035f594cbcd9d8357080f25, type: 3}
+  m_PrefabInstance: {fileID: 7414883697819283384}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8738723821155438675 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2279061568931807211, guid: 0464a26ec035f594cbcd9d8357080f25, type: 3}
   m_PrefabInstance: {fileID: 7414883697819283384}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &675244418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8738723821155438671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9816c2b52cd18cd4ab020437ee02f51b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 0}

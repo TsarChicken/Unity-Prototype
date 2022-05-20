@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19292cde386048141b21337627c428fd, type: 3}
   m_Name: Jump Rumble
   m_EditorClassIdentifier: 
+  isNonStop: 0
   pattern: 0
-  lowStart: 0.208
-  lowEnd: 0.282
-  highStart: 0.199
-  highEnd: 0.158
+  lowStart: 0.974
+  lowEnd: 0.965
+  highStart: 0.948
+  highEnd: 0.942
   burstTime: 0.4
   duration: 0.2

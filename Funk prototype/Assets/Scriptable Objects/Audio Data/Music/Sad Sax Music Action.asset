@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ed5913293762145b5047d515611ca5, type: 3}
+  m_Name: Sad Sax Music Action
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 8e3a78eb7e860f649ae0a505bfb79d84, type: 3}
+  - {fileID: 8300000, guid: 67c51680f9f7af949a7ba5b14f929f13, type: 3}
+  - {fileID: 8300000, guid: bb52ba97da030f64eabdf9274138c6ba, type: 3}

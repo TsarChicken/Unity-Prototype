@@ -1,37 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 public class Head : MonoBehaviour, IEventObservable
 {
-
+    [SerializeField]
+    private float minAimRegister = .3f;
     public Transform offset;
     private Transform parent;
     private PlayerEvents playerEvents;
+    private SpriteRenderer _renderer;
     private void Awake()
     {
         parent = GetComponentInParent<Transform>();
         playerEvents = GetComponentInParent<PlayerEvents>();
+        _renderer = GetComponent<SpriteRenderer>();
     }
     public void MoveHead(Vector2 aimDir)
     {
-        if (aimDir.x >= 0.3f)
+        if (aimDir.x >= minAimRegister)
         {
-            if (GetComponent<SpriteRenderer>().flipX == false)
+            if (_renderer.flipX == false)
             {
                 return;
             }
-            GetComponent<SpriteRenderer>().flipX = false;
+            _renderer.flipX = false;
             offset.DOLocalMoveX(5f, 2.5f);
-        }
-        if (aimDir.x <= -0.3f)
+        } 
+        else if (aimDir.x <= -minAimRegister)
         {
 
-            if (GetComponent<SpriteRenderer>().flipX == true)
+            if (_renderer.flipX == true)
             {
                 return;
             }
-            GetComponent<SpriteRenderer>().flipX = true;
+            _renderer.flipX = true;
 
             offset.DOLocalMoveX(-5f, 2.5f);
         }

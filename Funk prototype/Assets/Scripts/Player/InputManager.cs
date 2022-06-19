@@ -5,21 +5,22 @@ using UnityEngine.InputSystem;
 
 public class InputManager :IControllable
 {
-    private RestrictionManager restrictor;
+    private RestrictionManager _restrictor;
 
-    private PlayerEvents playerEvents;
+    private PlayerEvents _playerEvents;
 
-    private EventsChecker checker;
+    private EventsChecker _checker;
 
-    private PlayerInput input;
+    private PlayerInput _input;
+
 
     private bool isBlocked = false;
     private void Start()
     {
-        restrictor = RestrictionManager.instance;
-        playerEvents = GetComponent<PlayerEvents>();
-        checker = GetComponent<EventsChecker>();
-        input = GetComponent<PlayerInput>();
+        _restrictor = RestrictionManager.instance;
+        _playerEvents = GetComponent<PlayerEvents>();
+        _checker = GetComponent<EventsChecker>();
+        _input = GetComponent<PlayerInput>();
     }
 
     //public override void TakeControl()
@@ -30,36 +31,37 @@ public class InputManager :IControllable
     public override void Block()
     {
         isBlocked = true;
+        PlayerInfo.instance.IsStunned = isBlocked;
+        
+        PlayerInfo.instance?.Movement.StopHorizontalMovement();
     }
 
     public override void Unblock()
     {
         isBlocked = false;
+        PlayerInfo.instance.IsStunned = isBlocked;
     }
-    //private void OnEnable()
-    //{
-    //    input.enabled = true;
-    //}
-    //private void OnDisable()
-    //{
-    //    input.enabled = false;
-
-    //}
+    private void OnEnable()
+    {
+        Block();
+        Unblock();
+    }
+ 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (playerEvents.onMove.IsEmpty() || isBlocked)
+        if (_playerEvents.onMove.IsEmpty() || isBlocked)
         {
             return;
         }
-        playerEvents.onMove.Invoke(context.ReadValue<Vector2>());
+        _playerEvents.onMove.Invoke(context.ReadValue<Vector2>());
     }
     public void OnAim(InputAction.CallbackContext context)
     {
-        if (playerEvents.onAim.IsEmpty() || isBlocked )
+        if (_playerEvents.onAim.IsEmpty() || isBlocked )
         {
             return;
         }
-        playerEvents.onAim.Invoke(context.ReadValue<Vector2>());
+        _playerEvents.onAim.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnFire(InputAction.CallbackContext context)
@@ -68,13 +70,13 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onFire.IsEmpty() || checker.CanFire == false || isBlocked)
+        if (_playerEvents.onFire.IsEmpty() || _checker.CanFire == false || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        
-        playerEvents.onFire.Invoke();
+
+        _playerEvents.onFire.Invoke();
 
     }
 
@@ -85,13 +87,13 @@ public class InputManager :IControllable
             return;
         }
 
-        if (playerEvents.onJump.IsEmpty() ||checker.CanJump == false || isBlocked)
+        if (_playerEvents.onJump.IsEmpty() || _checker.CanJump == false || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        
-            playerEvents.onJump.Invoke();
+
+        _playerEvents.onJump.Invoke();
         
 
     }
@@ -102,12 +104,12 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onInteract.IsEmpty() || checker.CanInteract == false || isBlocked)
+        if (_playerEvents.onInteract.IsEmpty() || _checker.CanInteract == false || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        playerEvents.onInteract.Invoke();
+        _playerEvents.onInteract.Invoke();
     }
 
     public void OnSwitchGravity(InputAction.CallbackContext context)
@@ -116,12 +118,12 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onGravitySwitch.IsEmpty() || checker.CanSwitchGravity == false || isBlocked)
+        if (_playerEvents.onGravitySwitch.IsEmpty() || _checker.CanSwitchGravity == false || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        playerEvents.onGravitySwitch.Invoke();
+        _playerEvents.onGravitySwitch.Invoke();
     }
 
     public void OnCharacterPhys(InputAction.CallbackContext context)
@@ -130,12 +132,12 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onPlayerGravity.IsEmpty() || checker.CanSwitchGravity == false || isBlocked)
+        if (_playerEvents.onPlayerGravity.IsEmpty() || _checker.CanFlipGravParams == false || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        playerEvents.onPlayerGravity.Invoke();
+        _playerEvents.onPlayerGravity.Invoke();
     }
 
     public void OnEnvironmentPhys(InputAction.CallbackContext context)
@@ -144,12 +146,12 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onEnvironmentGravity.IsEmpty() || checker.CanSwitchGravity == false || isBlocked)
+        if (_playerEvents.onEnvironmentGravity.IsEmpty() || _checker.CanFlipGravParams == false || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        playerEvents.onEnvironmentGravity.Invoke();
+        _playerEvents.onEnvironmentGravity.Invoke();
     }
 
     public void OnCrouch(InputAction.CallbackContext context)
@@ -158,12 +160,12 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onCrouch.IsEmpty() || isBlocked)
+        if (_playerEvents.onCrouch.IsEmpty() || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        playerEvents.onCrouch.Invoke();
+        _playerEvents.onCrouch.Invoke();
 
     }
 
@@ -173,12 +175,12 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onHighlight.IsEmpty() || isBlocked)
+        if (_playerEvents.onHighlight.IsEmpty() || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        playerEvents.onHighlight.Invoke();
+        _playerEvents.onHighlight.Invoke();
     }
 
     public void OnDrawWeapon(InputAction.CallbackContext context)
@@ -187,12 +189,12 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onWeaponSwitch.IsEmpty() || checker.CanDrawWeapon == false || isBlocked)
+        if (_playerEvents.onWeaponSwitch.IsEmpty() || _checker.CanDrawWeapon == false || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        playerEvents.onWeaponSwitch.Invoke();
+        _playerEvents.onWeaponSwitch.Invoke();
     }
 
     public void OnFireMode(InputAction.CallbackContext context)
@@ -201,12 +203,12 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onFireModeSwitch.IsEmpty() || checker.CanFireMode == false || isBlocked)
+        if (_playerEvents.onFireModeSwitch.IsEmpty() || _checker.CanFireMode == false || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        playerEvents.onFireModeSwitch.Invoke();
+        _playerEvents.onFireModeSwitch.Invoke();
     }
 
     public void OnMelee(InputAction.CallbackContext context)
@@ -215,12 +217,12 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onMelee.IsEmpty() || isBlocked)
+        if (_playerEvents.onMelee.IsEmpty() || _checker.CanMelee == false || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        playerEvents.onMelee.Invoke();
+        _playerEvents.onMelee.Invoke();
     }
 
     public void OnCameraDistant(InputAction.CallbackContext context)
@@ -229,12 +231,12 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onTrajectory.IsEmpty() || isBlocked)
+        if (_playerEvents.onTrajectory.IsEmpty() || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
-        playerEvents.onTrajectory.Invoke();
+        _playerEvents.onTrajectory.Invoke();
     }
     public void OnPause(InputAction.CallbackContext context)
     {
@@ -242,12 +244,12 @@ public class InputManager :IControllable
         {
             return;
         }
-        if (playerEvents.onPause.IsEmpty() || isBlocked)
+        if (_playerEvents.onPause.IsEmpty() || isBlocked)
         {
-            restrictor.Restrict();
+            _restrictor.Restrict();
             return;
         }
 
-        playerEvents.onPause.Invoke();
+        _playerEvents.onPause.Invoke();
     }
 }

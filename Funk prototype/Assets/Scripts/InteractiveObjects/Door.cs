@@ -1,24 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : IInteractable
+public class Door : MonoBehaviour
 {
-   
-    public override void Interact()
+    [SerializeField] Location nextLocation;
+
+    private Location _parentActivator;
+
+    private void Start()
     {
-        Close();
-    }
-    private void Close()
-    {
-        StartCoroutine(SetClosed());
+        _parentActivator = GetComponentInParent<Location>();
     }
 
-  
-    private IEnumerator SetClosed()
-    {
-        GetComponent<Transform>().localScale = Vector3.zero;
-        yield return new WaitForSeconds(3f);
-        GetComponent<Transform>().localScale = initialSize ;
-    }
+
 }

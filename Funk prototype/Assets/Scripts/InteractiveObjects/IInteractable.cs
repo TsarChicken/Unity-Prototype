@@ -1,21 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public abstract class IInteractable : MonoBehaviour
+using UnityEngine.Events;
+[RequireComponent(typeof(Collider2D))]
+public class IInteractable : MonoBehaviour
 {
+    public UnityEvent InteractionEvent;
 
-   protected InteractionManager player;
-    protected Vector3 initialSize;
+    protected InteractionManager player;
     private Material currentMaterial;
 
+    public bool CanInteract { private get; set; }
     protected virtual void Start()
     {
-        initialSize = GetComponent<Transform>().localScale;
-        InteractionController.instance.interactiveObj.Add(this);
         UnhighlightInactive();
+        InteractionController.instance.interactiveObj.Add(this);
+        CanInteract = true;
     }
-    public abstract void Interact();
 
     public void HighlightActive()
     {
@@ -38,10 +37,10 @@ public abstract class IInteractable : MonoBehaviour
         UnhighlightActive();
 
     }
-    
+
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Player"))
+        if (PhysicsDataManager.instance.IsPlayer(collision.gameObject) == false || !CanInteract)
         {
             return;
         }
@@ -56,7 +55,7 @@ public abstract class IInteractable : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Player"))
+        if (PhysicsDataManager.instance.IsPlayer(collision.gameObject) == false)
         {
             return;
         }
@@ -71,5 +70,4 @@ public abstract class IInteractable : MonoBehaviour
         UnhighlightActive();
     }
 
-    
 }

@@ -1,20 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public abstract class IBullet : MonoBehaviour
 {
     [SerializeField]
     DamageType damageVariant = DamageType.Medium;
-    //INTO WEAPON
     [SerializeField]
-    protected float speed = 70f;
+    protected float flySpeed = 70f;
 
     [SerializeField]
     protected Rigidbody2D rb;
-    
-    protected IWeapon weaponUsed { get; set; }
 
+    protected IWeapon weaponUsed;
+
+    private ParticleSystem particle;
+
+    [SerializeField]
+    protected LayerMask interactiveLayers;
+
+    public readonly GameEvent<Vector3> onHit = new GameEvent<Vector3>();
     public abstract void Stop(Transform parent);
     protected virtual void Damage(Collider2D collision)
     {
@@ -32,17 +36,22 @@ public abstract class IBullet : MonoBehaviour
         {
             Stop(collision.transform);
         }
+
     }
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        print(collision.CompareTag("Player"));
-        if (PhysicsDataManager.instance.IsInteractable(collision.gameObject))
+        DamageCollision(collision);
+    }
+    protected virtual void DamageCollision(Collider2D collision)
+    {
+        if (interactiveLayers == (interactiveLayers | (1 << collision.gameObject.layer)))
         {
-            print(collision.gameObject);
+            onHit.Invoke(transform.position);
+
             Damage(collision);
         }
     }
-    public abstract void Move(float speed);
+    public abstract void Move();
     public abstract void SetWeaponUsed(IWeapon weapon);
 
 }

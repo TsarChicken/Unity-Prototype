@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BottleBullet : IBullet
@@ -11,21 +10,26 @@ public class BottleBullet : IBullet
     public bool isSticking;
     public Collider2D notTriggerCol;
     public IInteractable interactable;
+    private AirDamage damage;
     private void Awake()
     {
         fixedJoint = GetComponent<FixedJoint2D>();
         fixedJoint.enabled = false;
         interactable = GetComponent<IInteractable>();
         controller = GetComponentInParent<BottleController>();
+        damage = GetComponent<AirDamage>();
     }
-    public override void Move(float speed)
+    public override void Move()
     {
         isSticking = false;
         fixedJoint.enabled = false;
         SetStandartBottle();
-        rb.AddTorque(-10);
-        rb.AddForce(parentTransform.right * speed, ForceMode2D.Impulse);
+        GetComponentInParent<Rigidbody2D>().AddTorque(-10);
+        GetComponentInParent<Rigidbody2D>().AddForce(parentTransform.right * flySpeed, ForceMode2D.Impulse);
+        //rb.AddForce(parentTransform.right * flySpeed, ForceMode2D.Impulse);
     }
+
+    
     private void Update()
     {
         if (isSticking)
@@ -58,6 +62,7 @@ public class BottleBullet : IBullet
         transform.position = firepoint.transform.position;
         fixedJoint.connectedAnchor = firepoint.transform.position;
         fixedJoint.enabled = true;
+        damage.ShouldDamagePlayer = false;
 
     }
     public void SetStandartBottle()

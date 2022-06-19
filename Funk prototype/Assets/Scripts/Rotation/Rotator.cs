@@ -1,74 +1,99 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
 using DG.Tweening;
 public class Rotator :  MonoBehaviour
 {
     [SerializeField] private float rotationTime;
-    private float degrees = 360f;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private bool isTimeFixed = false;
+    [SerializeField] private float delayTime = .075f;
+    private WaitForSeconds _waitForSeconds;
+    public float gravityValue { private get; set; }
 
-
-
-    private void Update()
+    private Rigidbody2D rb;
+    private void Awake()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+        _waitForSeconds = new WaitForSeconds(delayTime);
     }
-    public void HandleRotation(float gravity)
+
+    private void OnEnable()
     {
-        if (isTimeFixed)
+        GlobalGravity.instance.onRotationPositive.AddListener(RotatePositive);
+        GlobalGravity.instance.onRotationNegative.AddListener(RotateNegative);
+
+    }
+    private void OnDisable()
+    {
+        GlobalGravity.instance.onRotationPositive.RemoveListener(RotatePositive);
+        GlobalGravity.instance.onRotationNegative.RemoveListener(RotateNegative);
+       
+
+    }
+    private void OnDestroy()
+    {
+        DOTween.KillAll();
+    }
+    private void RotatePositive()
+    {
+        HandleRotation(0f);
+    }
+
+    private void RotateNegative()
+    {
+        HandleRotation(180f);
+    }
+    public void HandleRotation(float value)
+    {
+        if (rb)
         {
-            StartCoroutine( Rotate());
+            gravityValue = rb.gravityScale;
         } else
         {
-           StartCoroutine( Rotate(gravity));
+            gravityValue = 1;
+        }
+        
+        if (isTimeFixed)
+        {
+            StartCoroutine( Rotate(value));
+        } else
+        {
+           StartCoroutine( Rotate(gravityValue, value));
         }
     }
 
-    public IEnumerator Rotate(float gravity)
+    private IEnumerator Rotate(float gravity, float value)
     {
-        yield return new WaitForSeconds(.075f);
+        yield return _waitForSeconds;
 
         float time = Mathf.Sqrt(2f * GetDistance() / Mathf.Abs(gravity)) / 2f;
-        //transform.DORotate(new Vector3(0, 0, (transform.rotation.z * 180) + 180f), time, RotateMode.Fast);
-        transform.DOBlendableRotateBy(new Vector3(0, 0, 180f), time);
-
+        transform.DORotate(new Vector3(0, 0, value), time);
     }
 
-    public IEnumerator Rotate()
+    private IEnumerator Rotate(float value)
     {
         yield return new WaitForSeconds(.075f);
 
-        //transform.DORotate(new Vector3(0, 0, (transform.rotation.z * 180) + 180f), rotationTime, RotateMode.Fast);
-        transform.DOBlendableRotateBy(new Vector3(0, 0, 180f), rotationTime);
+        transform.DORotate(new Vector3(0, 0, value), rotationTime);
     }
-    public float GetDistance(LayerMask layer)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 180, layer);
-        if (hit)
-        {
-            //Color of debug ray
-            Color color = hit ? Color.red : Color.green;
-
-
-            if (hit.collider != null && (layer.value & 1 << hit.collider.gameObject.layer) == 1 << hit.collider.gameObject.layer)
-            {
-                Debug.DrawRay(transform.transform.position, transform.up * hit.distance, color);
-
-                return hit.distance;
-            }
-            
-        
-        }
-        return 0;
-
-    }
+   
 
     public float GetDistance()
     {
-        return GetDistance(groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 180, groundLayer);
+        if (hit)
+        {
+            Color color = hit ? Color.red : Color.green;
+
+            if (hit.collider != null && (groundLayer.value & 1 << hit.collider.gameObject.layer) == 1 << hit.collider.gameObject.layer)
+            {
+                return hit.distance;
+            }
+
+        }
+        return 0;
+
+
     }
 
 

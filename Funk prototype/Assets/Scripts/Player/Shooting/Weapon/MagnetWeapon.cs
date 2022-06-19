@@ -6,6 +6,7 @@ public class MagnetWeapon : IWeapon
 {
     [SerializeField]
     private Shoot teleportShoot;
+    private MagnetBullet magnetBullet;
     public override void SwitchMode()
     {
         currentShoot.enabled = false;
@@ -21,20 +22,28 @@ public class MagnetWeapon : IWeapon
     protected override void OnEnable()
     {
         player.onFireModeSwitch.AddListener(SwitchMode);
+        GetComponent<SpriteRenderer>().material = MaterialsHolder.instance.defaultMaterial;
 
-        
-        if (FindObjectOfType<MagnetBullet>() == null)
-        {
-            print("INSTANTIATING");
-            bullet = Instantiate(bullet) as MagnetBullet;
-        }
-        if (bullet.isActiveAndEnabled == false)
-        {
-            bullet.transform.SetPositionAndRotation(firepoint.position, Quaternion.identity);
-            bullet.transform.SetParent(firepoint);
-        }
-        bullet.SetWeaponUsed(this);
+        SetBullet();
 
     }
 
+    public void SetBullet()
+    {
+        if (magnetBullet == null)
+        {
+            magnetBullet = Instantiate(bullet) as MagnetBullet;
+            bullet = magnetBullet;
+        }
+        if (magnetBullet.isActiveAndEnabled == false)
+        {
+            magnetBullet.transform.SetPositionAndRotation(firepoint.position, Quaternion.identity);
+            magnetBullet.transform.SetParent(firepoint);
+        }
+        magnetBullet.SetWeaponUsed(this);
+    }
+    private void DestroyBullet()
+    {
+        magnetBullet = null;
+    }
 }

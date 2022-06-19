@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class AimNormal : Aim
 {
-    private float previousAngle = 0f;
-    private float direction;
-    private Transform parentTransform;
+    private float _previousAngle = 0f;
+    private float _direction;
+    private Transform _parentTransform;
     protected override void Awake()
     {
         base.Awake();
-        parentTransform = GetComponentInParent<InputManager>().transform;
+        _parentTransform = GetComponentInParent<InputManager>().transform;
     }
     public override GameObject Work()
     {
-        direction = parentTransform.right.x;
-        float angle = (Mathf.Atan2(aimY, aimX * direction) * Mathf.Rad2Deg) * direction;
+        _direction = _parentTransform.right.x;
+        float angle = (Mathf.Atan2(aimY, aimX * _direction) * Mathf.Rad2Deg) * _direction;
         if ((aimY == 0f && aimX == 0f))
-            angle = previousAngle;
+            angle = _previousAngle;
 
         armToRotate.eulerAngles = new Vector3(0, 0, angle);
 
-        previousAngle = angle;
+        _previousAngle = angle;
         RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right, 300f, enemyLayer);
 
         if (hitInfo)

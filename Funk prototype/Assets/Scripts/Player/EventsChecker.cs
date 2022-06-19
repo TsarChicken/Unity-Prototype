@@ -6,12 +6,12 @@ public class EventsChecker : MonoBehaviour
 {
 
    
-    private PlayerInfo player;
+    private PlayerInfo _player;
 
     private void Awake()
     {
-       
-        player = GetComponent<PlayerInfo>();
+
+        _player = GetComponent<PlayerInfo>();
     }
 
     
@@ -19,7 +19,7 @@ public class EventsChecker : MonoBehaviour
         get
         {
             
-            return player.Weapons.CanCurrentWeaponFire;
+            return _player.Weapons.CanCurrentWeaponFire;
         }
     }
 
@@ -27,7 +27,7 @@ public class EventsChecker : MonoBehaviour
     {
         get
         {
-            return player.PlayerPhysics.SuitsJump();
+            return _player.PlayerPhysics.SuitsJump();
         }
     }
 
@@ -35,7 +35,7 @@ public class EventsChecker : MonoBehaviour
     {
         get
         {
-            return player.Interactions.HasInteractions();
+            return _player.Interactions.HasInteractions();
         }
     }
 
@@ -48,12 +48,16 @@ public class EventsChecker : MonoBehaviour
         }
         get
         {
-            return canSwitchGravity && LevelManager.instance.currentRoom.CanSwitchGravity;
+            return canSwitchGravity && BuildingMaster.instance.CurrentLocation.CanSwitchGravity;
         }
 
     }
 
-    
+    public bool CanFlipGravParams
+    {
+      
+        get => canSwitchGravity && BuildingMaster.instance.CurrentLocation.CanUpdateGravityParams;
+    }
 
     public bool CanCrouch
     {
@@ -70,7 +74,7 @@ public class EventsChecker : MonoBehaviour
     {
         get
         {
-            return player.Weapons.HasWeapon();
+            return _player.Weapons.HasWeapon();
         }
 
     }
@@ -79,7 +83,7 @@ public class EventsChecker : MonoBehaviour
     {
         get
         {
-            return player.Weapons.HasActiveWeapon();
+            return _player.Weapons.HasActiveWeapon();
         }
 
     }
@@ -88,7 +92,7 @@ public class EventsChecker : MonoBehaviour
     {
         get
         {
-            return player.PlayerPhysics.isOnGround;
+            return _player.PlayerPhysics.isOnGround && _player.PlayerMelee.CanFight;
         }
 
     }
@@ -96,7 +100,7 @@ public class EventsChecker : MonoBehaviour
     {
         get
         {
-            return player.Weapons.HasActiveWeapon();
+            return _player.Weapons.HasActiveWeapon();
         }
     }
 

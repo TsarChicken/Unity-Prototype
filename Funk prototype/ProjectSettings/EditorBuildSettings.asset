@@ -17,7 +17,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Bla.unity
     guid: 000acd505166dfc4183b2ead8078ad2c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Black And White.unity
     guid: 61a9c3d443cba034582b14fdea24a480
+  - enabled: 1
+    path: Assets/Scenes/Tilemap Scene.unity
+    guid: 99237605fd7f4e146a8c9f3bb778900b
   m_configObjects: {}

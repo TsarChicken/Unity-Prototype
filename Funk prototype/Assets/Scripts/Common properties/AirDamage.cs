@@ -1,52 +1,64 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AirDamage : MonoBehaviour
 {
     [SerializeField]
-    private float requiredVelocityY;
+    private float requiredVelocityY = 7f;
     [SerializeField]
-    private float requiredVelocityX;
+    private float requiredVelocityX = 14f;
 
-    private Rigidbody2D rb;
-    private Health health;
-    private LayerMask collisionLayer;
+    [SerializeField]
+    private DamageType damageVariant = DamageType.Low;
+
+
+    private Rigidbody2D _rb;
+    private Health _health;
+
+    private readonly string PLAYER_TAG = "Player";
+    public bool ShouldDamagePlayer { private get; set; }
+
+    private bool isVelocityEnough => Mathf.Abs(_rb.velocity.x) <= requiredVelocityX && Mathf.Abs(_rb.velocity.y) <= requiredVelocityY;
     private void Awake()
     {
-        health = GetComponentInParent<Health>();
-        rb = GetComponentInParent<Rigidbody2D>();
+        _health = GetComponentInParent<Health>();
+        _rb = GetComponentInParent<Rigidbody2D>();
+        ShouldDamagePlayer = true;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D obj)
     {
-        //if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Player"))
-        //{
-        //    print("ENEMY BOTTLE");
-        print(collision.gameObject);
-        if (collision.CompareTag("Enemy"))
+        if (isVelocityEnough)
         {
-            print(Mathf.Abs(rb.velocity.y));
+            return;
         }
-            if (Mathf.Abs(rb.velocity.y) >= requiredVelocityY || Mathf.Abs(rb.velocity.x) >= requiredVelocityX)
-            {
-                print("ENEMY FAST" + collision.gameObject);
-                print(collision.gameObject.TryGetComponent(out Stunner stunner));
-                if (stunner)
-                {
-                print(stunner);
-                    stunner.onStun.Invoke();
-                }
-                else
-                {
-                    if (collision.gameObject.TryGetComponent(out Health colHp))
-                    {
-                        print(colHp);
-                        DamageManager.instance.DamageObject(DamageType.Max, colHp);
-                    }
-
-                }
-                health.MaxDamage();
-            }
-        //}
+        if(!ShouldDamagePlayer && obj.CompareTag(PLAYER_TAG))
+        {
+            return;
+        }
+        InteractWithObject(obj);
     }
+
+    private void InteractWithObject(Collider2D obj)
+    {
+       
+        if (obj.TryGetComponent(out Stunner stunner))
+        {
+            stunner.onStun.Invoke();
+
+        }
+        if (obj.TryGetComponent(out Health hp))
+        {
+            DamageManager.instance.DamageObject(damageVariant, hp);
+        }
+        if (obj.TryGetComponent(out Pushable pushable))
+        {
+            print(pushable);
+            pushable.PushObject(0);
+        }
+        if (_health)
+        {
+            DamageManager.instance.DamageObject(DamageType.Low, _health);
+        }
+    }
+
 }
+

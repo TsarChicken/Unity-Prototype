@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInfo : Singleton<PlayerInfo>
@@ -17,7 +15,14 @@ public class PlayerInfo : Singleton<PlayerInfo>
     public WeaponManager Weapons { get; private set; }
     public InteractionManager Interactions { get; private set; }
 
+    public Melee PlayerMelee { get; private set; }
 
+    [SerializeField] 
+    private Transform playerOffset;
+
+    public bool IsStunned { get; set; }
+
+    public Transform cameraOffset { get { return playerOffset; } }
     public override void Awake()
     {
         PlayerPhysics = GetComponent<PhysicsInfo>();
@@ -27,7 +32,9 @@ public class PlayerInfo : Singleton<PlayerInfo>
         Weapons = GetComponent<WeaponManager>();
         Interactions = GetComponent<InteractionManager>();
         View = GetComponent<PlayerView>();
+        Movement = GetComponent<MovementManager>();
 
+        PlayerMelee = GetComponentInChildren<Melee>();
     }
 
 }

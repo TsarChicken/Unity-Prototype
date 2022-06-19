@@ -1,49 +1,119 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Melee : MonoBehaviour, IEventObservable
 {
     [SerializeField]
     DamageType damageVariant = DamageType.Medium;
-    private PlayerEvents input;
+
     [SerializeField]
     private LayerMask interactiveLayers;
     [SerializeField]
     private float attackRange = .5f;
     [SerializeField]
     private Transform attackPoint;
+    [SerializeField]
+    private float stopTime = 1.5f;
+
+
+    private float _direction = 1f;
+
+    private WaitForSeconds _waitforSeconds;
+
+    private PlayerEvents _input;
+
+    public readonly GameEvent onPunchSucceeded = new GameEvent();
+
+    public bool CanFight { get; private set; }
+
     private void Awake()
     {
-        input = GetComponent<PlayerEvents>();
+        _input = GetComponentInParent<PlayerEvents>();
+        _waitforSeconds = new WaitForSeconds(stopTime);
     }
     public void OnEnable()
     {
-        input.onMelee.AddListener(Fight);
-
+        CanFight = true;
+        if (_input)
+        {
+            _input.onMelee.AddListener(HandleFight);
+            _input.onAim.AddListener(UdpateDirection);
+        }
+        
     }
 
     public void OnDisable()
     {
-        input.onMelee.RemoveListener(Fight);
+        CanFight = false;
+        if (_input)
+        {
+            _input.onMelee.RemoveListener(HandleFight);
+            _input.onAim.RemoveListener(UdpateDirection);
+        }
+
     }
-    public void Fight()
+
+    private void UdpateDirection(Vector2 dir)
     {
-        print("Fight");
+        if(dir.x != 0f)
+        {
+            _direction = Mathf.Sign(dir.x);
+            var pos = transform.localPosition;
+            pos.x = Mathf.Abs(pos.x) * _direction;
+            transform.localPosition = pos;
+        }
+    }
+
+    public void HandleFight()
+    {
+        if (CanFight)
+        {
+            StartCoroutine(Fight());
+        }
+    }
+
+    private IEnumerator Fight()
+    {
         Collider2D[] hitObjects = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, interactiveLayers);
 
-        foreach(Collider2D obj in hitObjects)
+        if(hitObjects.Length > 0)
         {
-            if (obj.CompareTag("Enemy"))
+
+            for (int i = 0; i < hitObjects.Length; i++)
             {
-                var stunner = obj.GetComponent<Stunner>();
-                stunner.onStun.Invoke();
+                HitObject(hitObjects[i].gameObject);
             }
-            //if (obj.CompareTag("Destructable"))
-            //{
-            //    var health = obj.GetComponent<Health>();
-            //    DamageManager.instance.DamageObject(damageVariant, health);
-            //}
+            onPunchSucceeded.Invoke();
+
         }
+
+        CanFight = false;
+
+        yield return _waitforSeconds;
+
+        CanFight = true;
+    }
+
+    private void HitObject(GameObject obj)
+    {
+        if (obj.TryGetComponent(out Pushable pushable))
+        {
+            pushable.PushObject(_direction * transform.right.x);
+        }
+        if (obj.TryGetComponent(out Stunner stunner))
+        {
+            stunner.onStun.Invoke();
+
+        }
+        if (obj.TryGetComponent(out Health hp))
+        {
+            DamageManager.instance.DamageObject(damageVariant, hp);
+        }
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, attackRange);
     }
 }

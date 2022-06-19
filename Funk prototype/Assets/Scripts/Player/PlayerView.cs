@@ -16,7 +16,7 @@ public class PlayerView : MonoBehaviour
                 weapon.gameObject.SetActive(false);
             }
         }
-        commonSortingOrder = characterSprites[0].sortingOrder;
+        commonSortingOrder = characterSprites[1].sortingOrder;
 
     }
 }

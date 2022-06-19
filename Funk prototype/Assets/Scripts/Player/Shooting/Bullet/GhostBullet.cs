@@ -7,25 +7,9 @@ public class GhostBullet : StandartBullet
     public WeaponManager player;
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collisionLayer.value == (collisionLayer | (1 << collision.gameObject.layer)))
-        //{
-        //    gameObject.SetActive(false);
-        //}
+        
     }
-    //protected override void Awake()
-    //{
-    //    return;
-    //}
-    //protected override void OnEnable()
-    //{
-    //    DontDestroyOnLoad(gameObject);
 
-    //    //CopyRigidProperties(player.currentWeapon.bullet.GetComponent<Rigidbody2D>());
-    //   /* rb = (Rigidbody2D)CopyComponent(player.currentWeapon.bullet.GetComponent<Rigidbody2D>(), gameObject)*/;
-    //    //rb = player.currentWeapon.bullet.GetComponent<Rigidbody2D>();
-    //    rb.velocity = Vector3.zero;
-       
-    //}
     Component CopyComponent(Component original, GameObject destination)
     {
         System.Type type = original.GetType();

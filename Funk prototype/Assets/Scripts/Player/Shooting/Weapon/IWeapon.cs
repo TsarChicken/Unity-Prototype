@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using System;
 
@@ -54,7 +55,12 @@ public abstract class IWeapon: MonoBehaviour
     protected virtual void OnEnable()
     {
         player.onFireModeSwitch.AddListener(SwitchMode);
-        bullet.SetWeaponUsed(this);
+
+        if (bullet)
+        {
+            bullet.SetWeaponUsed(this);
+        }
+        GetComponent<SpriteRenderer>().material = MaterialsHolder.instance.defaultMaterial;
     }
     protected virtual void OnDisable()
     {

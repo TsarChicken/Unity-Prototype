@@ -1,123 +1,93 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using DG.Tweening;
-public class CameraScript : MonoBehaviour, ICamera, IEventObservable
+public class CameraScript : MonoBehaviour, IEventObservable
 {
-    private PlayerInfo player;
-    private WeaponManager weapon;
-    private Rotator rotator;
-    private CinemachineVirtualCamera virtualCam;
+    
+
     [SerializeField]
-    private float zoomIn, zoomOut;
-    private float currentZoom = 0f;
-    private float time = 0f;
+    private CinemachineVirtualCamera pieceCamera, actionCamera;
+    private CinemachineVirtualCamera _currentCamera;
+
+    private PlayerInfo _player;
+    private WeaponManager _weapon;
+
+    [SerializeField]
+    private float shakeIntensity, shakeTime;
+
     private void Awake()
     {
-        player = PlayerInfo.instance;
-        rotator = GetComponent<Rotator>();
-        //StartCoroutine(Zoom(currentZoom, zoomIn));
-        currentZoom = zoomIn;
-        virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
-        virtualCam.m_Lens.OrthographicSize = currentZoom;
-        print("CAMERA SIZE   " + virtualCam.m_Lens.OrthographicSize);
+        _player = PlayerInfo.instance;
+        _weapon = _player.Weapons;
+        actionCamera.gameObject.SetActive(false);
+        _currentCamera = pieceCamera;
+        _currentCamera.gameObject.SetActive(true);
     }
-    private void Start()
+   
+    private void ZoomIn()
     {
-        print("CAMERA SIZE   " + virtualCam.m_Lens.OrthographicSize);
-
-    }
-    private void FixedUpdate()
-    {
-        //transform.rotation = player.transform.rotation;
-    }
-
-    public void RotateCamera()
-    {
-
-        //rotator.HandleRotation(player.PlayerPhysics.fallMultiplier);
+        _currentCamera.gameObject.SetActive(false);
+        _currentCamera = pieceCamera;
+        _currentCamera.gameObject.SetActive(true);
 
     }
-    public void SetPlayer()
+    private void ZoomOut()
     {
-        player = PlayerInfo.instance;
-        print("CAMERA PLAYER");
-        weapon = player.Weapons;
+        _currentCamera.gameObject.SetActive(false);
+        _currentCamera = actionCamera;
+        _currentCamera.gameObject.SetActive(true);
+        
+    }
+
+    public void ShakeCamera()
+    {
+        StartCoroutine(ShakeCoroutine(shakeIntensity, shakeTime));
+    }
+
+    private IEnumerator ShakeCoroutine(float intensity, float time)
+    {
+        CinemachineBasicMultiChannelPerlin channelPerlin =
+            _currentCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+        channelPerlin.m_AmplitudeGain = shakeIntensity;
+
+        yield return new WaitForSeconds(time);
+
+        channelPerlin.m_AmplitudeGain = 0f;
 
     }
 
-    public void HandleZoom()
+    private void ActivateCamera()
     {
-        float previousZoom = currentZoom;
-        if (currentZoom == zoomIn)
+        _currentCamera.gameObject.SetActive(false);
+        if (_weapon.HasActiveWeapon())
         {
-            currentZoom = zoomOut;
+            _currentCamera = actionCamera;
         }
         else
         {
-            currentZoom = zoomIn;
+            _currentCamera = pieceCamera;
         }
-        VariablesBuffer.instance.CurrentCameraZoom = currentZoom;
-        StartCoroutine(Zoom(previousZoom, currentZoom));
-       
+        _currentCamera.gameObject.SetActive(true);
     }
-
-    public void ZoomIn()
-    {
-        float previousZoom = currentZoom;
-        currentZoom = zoomIn;
-        VariablesBuffer.instance.CurrentCameraZoom = currentZoom;
-        StartCoroutine(Zoom(previousZoom, currentZoom));
-
-    }
-    public void ZoomOut()
-    {
-        float previousZoom = currentZoom;
-        currentZoom = zoomOut;
-        VariablesBuffer.instance.CurrentCameraZoom = currentZoom;
-        StartCoroutine(Zoom(previousZoom, currentZoom));
-    }
-    IEnumerator Zoom(float start, float end)
-    {
-        time = 0f;
-        while (virtualCam.m_Lens.OrthographicSize != end)
-        {
-            virtualCam.m_Lens.OrthographicSize = Mathf.Lerp(start, end, time);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        StopCoroutine(Zoom(start, end));
-        yield return null;
-
-    }
-
-
-    public void GravityShake()
-    {
-        virtualCam.transform.DOShakePosition(30f);
-    }
-
     public void OnEnable()
     {
-        //transform.rotation = player.transform.rotation;
-        virtualCam.m_Lens.OrthographicSize = VariablesBuffer.instance.CurrentCameraZoom;
-        if (weapon)
+        if (_weapon)
         {
-            weapon.onDrawWeapon.AddListener(ZoomOut);
-            weapon.onHideWeapon.AddListener(ZoomIn);
-        }      
+            _weapon.onDrawWeapon.AddListener(ZoomOut);
+            _weapon.onHideWeapon.AddListener(ZoomIn);
+        }
+        ActivateCamera();
 
     }
     public void OnDisable()
     {
-        if (weapon)
+        if (_weapon)
         {
-            weapon.onDrawWeapon.RemoveListener(ZoomOut);
-            weapon.onHideWeapon.RemoveListener(ZoomIn);
+            _weapon.onDrawWeapon.RemoveListener(ZoomOut);
+            _weapon.onHideWeapon.RemoveListener(ZoomIn);
         }
 
     }
-
 
 }

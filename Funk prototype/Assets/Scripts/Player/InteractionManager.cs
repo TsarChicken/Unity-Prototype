@@ -31,7 +31,7 @@ public class InteractionManager : MonoBehaviour
        
             if (interactiveObj)
             {
-                interactiveObj.Interact();
+                interactiveObj.InteractionEvent.Invoke();
             }
     }
 }

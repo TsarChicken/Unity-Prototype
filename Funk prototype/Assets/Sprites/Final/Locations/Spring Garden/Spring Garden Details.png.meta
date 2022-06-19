@@ -1,0 +1,504 @@
+fileFormatVersion: 2
+guid: f69952c8949eb49449661e6e58baa888
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5742876692870280784
+    second: Spring Garden Details_0
+  - first:
+      213: 9035980356534780236
+    second: Spring Garden Details_1
+  - first:
+      213: -3255077021790628807
+    second: Spring Garden Details_2
+  - first:
+      213: 3098823948946973557
+    second: Spring Garden Details_3
+  - first:
+      213: 2521033434745002423
+    second: Spring Garden Details_4
+  - first:
+      213: -6420989012520360840
+    second: Spring Garden Details_5
+  - first:
+      213: 6724167106177335031
+    second: Spring Garden Details_6
+  - first:
+      213: -367869607869062740
+    second: Spring Garden Details_7
+  - first:
+      213: -4627780027081022010
+    second: Spring Garden Details_8
+  - first:
+      213: -2004307643590881401
+    second: Spring Garden Details_9
+  - first:
+      213: -6118033299746235005
+    second: Spring Garden Details_10
+  - first:
+      213: -1132463646606997980
+    second: Spring Garden Details_11
+  - first:
+      213: 2478879635492879984
+    second: Spring Garden Details_12
+  - first:
+      213: -5755748972802265437
+    second: Spring Garden Details_13
+  - first:
+      213: 8898611017876048060
+    second: Spring Garden Details_14
+  - first:
+      213: -2811734775951271488
+    second: Spring Garden Details_15
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 150
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Spring Garden Details_0
+      rect:
+        serializedVersion: 2
+        x: 1082
+        y: 6633
+        width: 848
+        height: 792
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b9c89c23143d40b0800000000000000
+      internalID: -5742876692870280784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_1
+      rect:
+        serializedVersion: 2
+        x: 3313
+        y: 6633
+        width: 776
+        height: 1257
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 776, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c41c9a47240466d70800000000000000
+      internalID: 9035980356534780236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_2
+      rect:
+        serializedVersion: 2
+        x: 5107
+        y: 6695
+        width: 367
+        height: 1140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93412afd1b4a3d2d0800000000000000
+      internalID: -3255077021790628807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_3
+      rect:
+        serializedVersion: 2
+        x: 5870
+        y: 7294
+        width: 598
+        height: 255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 573257a96fb310b20800000000000000
+      internalID: 3098823948946973557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_4
+      rect:
+        serializedVersion: 2
+        x: 7211
+        y: 6851
+        width: 415
+        height: 2082
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b9dbd84d828cf220800000000000000
+      internalID: 2521033434745002423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_5
+      rect:
+        serializedVersion: 2
+        x: 8862
+        y: 6768
+        width: 292
+        height: 1068
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 874a902538014e6a0800000000000000
+      internalID: -6420989012520360840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_6
+      rect:
+        serializedVersion: 2
+        x: 10024
+        y: 6690
+        width: 340
+        height: 1708
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fef01e5b5a015d50800000000000000
+      internalID: 6724167106177335031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_7
+      rect:
+        serializedVersion: 2
+        x: 5870
+        y: 6695
+        width: 322
+        height: 531
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca16d4b6a8015eaf0800000000000000
+      internalID: -367869607869062740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3230
+        width: 2143
+        height: 2560
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c5203b9592d6cfb0800000000000000
+      internalID: -4627780027081022010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_9
+      rect:
+        serializedVersion: 2
+        x: 2451
+        y: 3230
+        width: 3265
+        height: 2355
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78f4a2341d44f24e0800000000000000
+      internalID: -2004307643590881401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_10
+      rect:
+        serializedVersion: 2
+        x: 6301
+        y: 3302
+        width: 2853
+        height: 3169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38d5d9ce021681ba0800000000000000
+      internalID: -6118033299746235005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_11
+      rect:
+        serializedVersion: 2
+        x: 9146
+        y: 3163
+        width: 1890
+        height: 2489
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42642fe305ea840f0800000000000000
+      internalID: -1132463646606997980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2698
+        height: 2906
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07eb08215efb66220800000000000000
+      internalID: 2478879635492879984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_13
+      rect:
+        serializedVersion: 2
+        x: 3857
+        y: 177
+        width: 1029
+        height: 1950
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ae2dc3fdc87f10b0800000000000000
+      internalID: -5755748972802265437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_14
+      rect:
+        serializedVersion: 2
+        x: 7042
+        y: 0
+        width: 1355
+        height: 1683
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb801eae2973e7b70800000000000000
+      internalID: 8898611017876048060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spring Garden Details_15
+      rect:
+        serializedVersion: 2
+        x: 10089
+        y: 481
+        width: 947
+        height: 1937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c9dfc45e16baf8d0800000000000000
+      internalID: -2811734775951271488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

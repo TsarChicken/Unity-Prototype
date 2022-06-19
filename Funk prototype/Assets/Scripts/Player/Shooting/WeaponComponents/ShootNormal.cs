@@ -19,8 +19,7 @@ public class ShootNormal : Shoot
     protected override void Work()
     {
         IBullet bullet = Instantiate(weaponParent.bullet, weaponParent.firepoint.position, weaponParent.firepoint.rotation);
-        bullet.Move(bulletSpeed);
+        bullet.Move();
         waitBeforeShooting = Time.time + shootWaitTime;
-
     }
 }

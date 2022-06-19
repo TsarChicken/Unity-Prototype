@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Pickable : IInteractable
@@ -9,7 +7,7 @@ public class Pickable : IInteractable
     [SerializeField]
     private IWeapon weapon;
 
-    public override void Interact()
+    public  void Interact()
     {
 
         print("pick");

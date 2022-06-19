@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ed5913293762145b5047d515611ca5, type: 3}
+  m_Name: PianoSounds
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: cfb678d182f72bd4a8dba767d00111a3, type: 3}
+  - {fileID: 8300000, guid: 067272fb0bdf39e4b96a7ec2884f1707, type: 3}
+  - {fileID: 8300000, guid: 7eca297a462920f429ce8c9c7400e7d0, type: 3}
+  - {fileID: 8300000, guid: b4cd4891a5ea4bb47ac3b7f88084d652, type: 3}

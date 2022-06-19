@@ -3,48 +3,77 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(FlashEffect))]
 public class Health : MonoBehaviour
 {
 
     
     [SerializeField]
-    private float hp = 100;
+    private float maxhp = 100;
 
-    private DeathLifeManager deathLifeManager;
-    public Rigidbody2D rb { get; set; }
+    private float _hp;
 
-    private void Awake()
+
+    public readonly GameEvent onHurt = new GameEvent();
+    public readonly GameEvent onDie = new GameEvent();
+    public readonly GameEvent onRevive = new GameEvent();
+
+    public void OnEnable()
     {
-        rb = GetComponent<Rigidbody2D>();
-        deathLifeManager = GetComponent<DeathLifeManager>();
+        RestoreHealth();
+    }
+
+    private void RestoreHealth()
+    {
+        _hp = maxhp;
     }
     public void Damage(float damPoints)
     {
-        hp -= damPoints;
+        _hp -= damPoints;
+        if(IsDead() == false)
+        {
+            onHurt.Invoke();
+        }
         UpdateGamepadRumble();
         Die();
     }
     
     public void MaxDamage()
     {
-        hp -= hp;
+        _hp -= _hp;
         Die();
     }
     public bool IsDead()
     {
-        return hp <= 0;
+        return _hp <= 0;
     }
 
     private void Die()
     {
-        if (IsDead())
-            gameObject.SetActive(false);
-            //deathLifeManager.SetDead();
+        if (!IsDead())
+            return;
+        if(onDie.IsEmpty())
+            Deactivate();
+        else
+            onDie.Invoke();
+
+
     }
+
+    private IEnumerator DeactivateDelay()
+    {
+        yield return new WaitForSeconds(0f);
+        Deactivate();
+    }
+    public void Deactivate()
+    {
+        gameObject.SetActive(false);
+    }
+
     private void UpdateGamepadRumble()
     {
 
-        if (TryGetComponent(out Rumbler rumble) && hp <= 40)
+        if (TryGetComponent(out Rumbler rumble) && _hp <= 40)
         {
             rumble.IncreaseNonStop();
         }

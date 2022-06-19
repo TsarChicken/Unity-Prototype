@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ed5913293762145b5047d515611ca5, type: 3}
+  m_Name: Office Peaceful Music
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: a737878e9c998094897f88fc5d9e9901, type: 3}
+  - {fileID: 8300000, guid: 87be6c68ab4bd224ca54981d6134acb2, type: 3}
+  - {fileID: 8300000, guid: 0463156385a71264ab628cb58c92d6eb, type: 3}
+  - {fileID: 8300000, guid: 1e579a32d5b3a484d9eb66c7be8a21ad, type: 3}
+  - {fileID: 8300000, guid: 09233957ebafc704988c818ab561349c, type: 3}
+  - {fileID: 8300000, guid: 300909e884a8bda4d9d94c5d7bd3f17d, type: 3}
+  - {fileID: 8300000, guid: 3c276b2fbd8a25744bdcb34aaa8675f2, type: 3}

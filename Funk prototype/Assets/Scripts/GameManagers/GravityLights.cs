@@ -1,45 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
 
-
-public class GravityLights : Singleton<GravityLights>
+public class GravityLights : MonoBehaviour
 {
+    private ObjectActivator[] _lampChildren;
 
-    public Transform locationLights { set; private get; }
-    private GravityManager player;
-    [SerializeField]
-    private Light2D playerLight;
-
-    
-    private void Start()
+    private void Awake()
     {
-        player = PlayerInfo.instance.Gravity;
-        playerLight = player.GetComponentInChildren<Light2D>();
-
-        print(playerLight);
+        _lampChildren = GetComponentsInChildren<ObjectActivator>();
     }
 
-    public void ClearLights()
+    public void TurnOn()
     {
-        playerLight.enabled = false;
-    }
-   
-    public void PlayerView()
-    {
-        playerLight.enabled = player.Player;
-        Debug.Log("Player");
-
-    }
-    public void EnvironmentView()
-    {
-        Debug.Log("Envir");
-        locationLights.gameObject.SetActive(player.Environment);
-       
+        for (int i = 0; i < _lampChildren.Length; i++)
+        {
+            _lampChildren[i].ActivateObjects();
+        }
     }
 
-   
-
+    public void TurnOff()
+    {
+        for (int i = 0; i < _lampChildren.Length; i++)
+        {
+            _lampChildren[i].DeactivateObjects();
+        }
+    }
 
 }

@@ -1,12 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 
 public class RestrictionManager: Singleton<RestrictionManager>
 {
+    private AudioManager _manager;
+
+    private void Start()
+    {
+        _manager = GetComponent<AudioManager>();
+    }
 
     public void Restrict()
     {
-        GetComponent<AudioManager>().PlaySound();
+        _manager.PlaySound();
     }
 }

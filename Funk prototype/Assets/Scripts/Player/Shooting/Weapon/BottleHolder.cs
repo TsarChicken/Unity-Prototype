@@ -10,8 +10,4 @@ public class BottleHolder : IWeapon
         PlayerInfo.instance.Weapons.RestoreMainWeapon();
     }
 
-    //protected override void OnEnable()
-    //{
-    //    base.OnEnable();
-    //}
 }

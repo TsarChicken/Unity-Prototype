@@ -4,70 +4,67 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour, IEventObservable
 {
-    private PlayerEvents input;
-    private EventsChecker checker;
-    private IWeapon mainWeapon;
-    private IWeapon currentWeapon;
-    public GameEvent onDrawWeapon = new GameEvent();
-    public GameEvent onHideWeapon = new GameEvent();
-    private bool isShowingTrajectory = false;
-    public GhostBullet ghostBullet;
+    public BottleHolder Holder;
+    private PlayerEvents _input;
+    private IWeapon _mainWeapon;
+    private IWeapon _currentWeapon;
+    public readonly GameEvent onDrawWeapon = new GameEvent();
+    public readonly GameEvent onHideWeapon = new GameEvent();
+    private bool _isShowingTrajectory = false;
     public bool CanCurrentWeaponFire
     {
         get
         {
-            return HasActiveWeapon() && currentWeapon.CanFire;
+            return HasActiveWeapon() && _currentWeapon.CanFire;
         }
     }
     private void Awake()
     {
-        input = GetComponent<PlayerEvents>();
-    }
-    private void Update()
-    {
-        //if (HasActiveWeapon() && isShowingTrajectory)
-        //{
-        //    //print(currentWeapon.transform.right);
-
-        //    Projection.instance.SimulateTrajectory(ghostBullet, currentWeapon.GetComponentInChildren<Transform>().position,
-        //        currentWeapon.GetComponentInChildren<Transform>().rotation);
-        //} else
-        //{
-        //    Projection.instance.ClearLine();
-        //}
+        _input = GetComponent<PlayerEvents>();
+       
 
     }
+
     public void OnEnable()
     {
-        input.onWeaponSwitch.AddListener(DrawWeapon);
+        _input.onWeaponSwitch.AddListener(DrawWeapon);
         onDrawWeapon.AddListener(ActivateCurrentWeapon);
         onHideWeapon.AddListener(DeactivateCurrentWeapon);
         PlayerInfo.instance.Stun.onStun.AddListener(onHideWeapon.Invoke);
-        //input.onTrajectory.AddListener(FlipTrajectory);
+        PlayerInfo.instance.HP.onDie.AddListener(Die);
+
     }
     public void OnDisable()
     {
-        input.onWeaponSwitch.RemoveListener(DrawWeapon);
+        _input.onWeaponSwitch.RemoveListener(DrawWeapon);
         onDrawWeapon.RemoveListener(ActivateCurrentWeapon);
         onHideWeapon.RemoveListener(DeactivateCurrentWeapon);
         PlayerInfo.instance.Stun.onStun.RemoveListener(onHideWeapon.Invoke);
-        //input.onTrajectory.RemoveListener(FlipTrajectory);
+        PlayerInfo.instance.HP.onDie.RemoveListener(Die);
 
     }
 
+    private void Die()
+    {
+        onHideWeapon.Invoke();
+        _currentWeapon?.gameObject.SetActive(false);
+        _currentWeapon = null;
+        _mainWeapon?.gameObject.SetActive(false);
+        _mainWeapon = null;
+    }
     public void FlipTrajectory()
     {
-        SetTrajectoryShow( !isShowingTrajectory);
+        SetTrajectoryShow( !_isShowingTrajectory);
     }
 
     public void SetTrajectoryShow(bool isShowing)
     {
-        isShowingTrajectory = isShowing;
+        _isShowingTrajectory = isShowing;
 
     }
     public void UpdateMainWeapon(IWeapon weapon)
     {
-        mainWeapon = weapon;
+        _mainWeapon = weapon;
         RestoreMainWeapon();
         onDrawWeapon.Invoke();
     }
@@ -76,22 +73,23 @@ public class WeaponManager : MonoBehaviour, IEventObservable
     {
         
         DeactivateCurrentWeapon();
-        currentWeapon = weapon;
+        _currentWeapon = weapon;
         onDrawWeapon.Invoke();
     }
 
     public void RestoreMainWeapon()
     {
         DeactivateCurrentWeapon();
-        
-        currentWeapon = mainWeapon;
-        ActivateCurrentWeapon();
+
+        _currentWeapon = _mainWeapon;
+        if (HasWeapon())
+            ActivateCurrentWeapon();
+        else
+            onHideWeapon.Invoke();
     }
 
     public void DrawWeapon()
     {
-
-        print("Drawing");
       
         if (HasActiveWeapon())
         {
@@ -110,16 +108,16 @@ public class WeaponManager : MonoBehaviour, IEventObservable
     {
         if (HasActiveWeapon())
         {
-            currentWeapon.gameObject.SetActive(false);
-            input.onFireModeSwitch.RemoveListener(SwitchFireMode);
+            _currentWeapon.gameObject.SetActive(false);
+            _input.onFireModeSwitch.RemoveListener(SwitchFireMode);
         }
     }
     private void ActivateCurrentWeapon()
     {
         if (HasWeapon())
         {
-            currentWeapon.gameObject.SetActive(true);
-            input.onFireModeSwitch.AddListener(SwitchFireMode);
+            _currentWeapon.gameObject.SetActive(true);
+            _input.onFireModeSwitch.AddListener(SwitchFireMode);
         }
     }
     public void SwitchFireMode()
@@ -129,11 +127,11 @@ public class WeaponManager : MonoBehaviour, IEventObservable
 
     public bool HasActiveWeapon()
     {
-        return HasWeapon() && currentWeapon.isActiveAndEnabled;
+        return HasWeapon() && _currentWeapon.isActiveAndEnabled;
     }
 
     public bool HasWeapon()
     {
-        return currentWeapon != null;
+        return _currentWeapon != null;
     }
 }

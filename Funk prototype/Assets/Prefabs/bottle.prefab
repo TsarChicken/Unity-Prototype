@@ -15,10 +15,7 @@ GameObject:
   - component: {fileID: 4694173486396851413}
   - component: {fileID: 4694173486396851412}
   - component: {fileID: 4694173486396851407}
-  - component: {fileID: 718279516}
-  - component: {fileID: 718279508}
-  - component: {fileID: 718279514}
-  m_Layer: 7
+  m_Layer: 15
   m_Name: bottle
   m_TagString: Interactive Object
   m_Icon: {fileID: 0}
@@ -79,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 1054916981
   m_SortingLayer: 3
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 3288aa281f09f6047a71a37bbf76f10c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 272ae94310a75b344853588f7e52c8d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -103,18 +100,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.002532959, y: -0.24}
+  m_Offset: {x: 0.002532959, y: 0.03}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.48831636, y: 0.71468633}
-    oldSize: {x: 0.47619048, y: 1.2698413}
+    pivot: {x: 0.5227115, y: 0.7904439}
+    oldSize: {x: 0.3968254, y: 1.031746}
     newSize: {x: 2.5, y: 4.89}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.28955078, y: 1.062418}
+  m_Size: {x: 0.31, y: 0.69}
   m_EdgeRadius: 0
 --- !u!50 &4694173486396851402
 Rigidbody2D:
@@ -131,7 +128,7 @@ Rigidbody2D:
   m_Mass: 0.2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 6
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -149,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e5bf32798caf342af396cbed08148b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 20
+  maxhp: 5
 --- !u!114 &4694173486396851412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,8 +159,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68478ed2b5affd245809e423f7dbe4a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredVelocityY: 7
-  requiredVelocityX: 14
+  requiredVelocityY: 35
+  requiredVelocityX: 30
+  damageVariant: 2
 --- !u!61 &4694173486396851407
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -177,65 +175,16 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.21}
+  m_Offset: {x: 0, y: 0.09}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.48831636, y: 0.71468633}
-    oldSize: {x: 0.47619048, y: 1.2698413}
+    pivot: {x: 0.5227115, y: 0.7904439}
+    oldSize: {x: 0.3968254, y: 1.031746}
     newSize: {x: 2.5, y: 4.89}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7193298, y: 1.9317398}
+  m_Size: {x: 1.71933, y: 1.93174}
   m_EdgeRadius: 0
---- !u!255 &718279516
-FixedJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4694173486396851415}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -159.4531, y: -83.335}
-  m_DampingRatio: 0
-  m_Frequency: 0
---- !u!114 &718279508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4694173486396851415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd8a9e52602976a4d814a48bfad6d538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
---- !u!114 &718279514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4694173486396851415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f133a39fbbc0b4fb9ba69f70ffcda0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageVariant: 1
-  speed: 70
-  rb: {fileID: 4694173486396851402}
-  isSticking: 0
-  notTriggerCol: {fileID: 0}
-  interactable: {fileID: 0}

@@ -26,13 +26,13 @@ TagManager:
   - Untouchable Item
   - Interactive Object
   - Player Only
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Particles
+  - Punchable
+  - No Characters
+  - Mirror
+  - Bullet
+  - Characters And Bullets Only
+  - Ground Only
   - 
   - 
   - 
@@ -60,6 +60,9 @@ TagManager:
     locked: 0
   - name: Characters
     uniqueID: 1569879547
+    locked: 0
+  - name: Front Objects
+    uniqueID: 3391427505
     locked: 0
   - name: Foreground
     uniqueID: 124213149

@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum DamageType
 {
+    None,
+    Min,
     Low,
     Medium,
     High,
@@ -11,26 +11,41 @@ public enum DamageType
 }
 public class DamageManager : Singleton<DamageManager>
 {
-    public float lowDamagePoints = 20f;
-    public float mediumDamagePoints = 40f;
-    public float highDamagePoints = 60f;
+    [SerializeField]
+    private float _minDamagePoints = 5f;
+
+    [SerializeField]
+    private float _lowDamagePoints = 20f;
+
+    [SerializeField]
+    private float _mediumDamagePoints = 40f;
+
+    [SerializeField]
+    private float _highDamagePoints = 60f;
 
     public void DamageObject(DamageType damageType, Health obj)
     {
         switch (damageType)
         {
+            case DamageType.None:
+                obj.Damage(0);
+                break;
+            case DamageType.Min:
+                obj.Damage(_minDamagePoints);
+                break;
             case DamageType.Low:
-                obj.Damage(lowDamagePoints);
+                obj.Damage(_lowDamagePoints);
                 break;
             case DamageType.Medium:
-                obj.Damage(mediumDamagePoints);
+                obj.Damage(_mediumDamagePoints);
                 break;
             case DamageType.High:
-                obj.Damage(highDamagePoints);
+                obj.Damage(_highDamagePoints);
                 break;
             case DamageType.Max:
                 obj.MaxDamage();
                 break;
+            
         }
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,11 +10,6 @@ public class Projection : Singleton<Projection>
     private Scene _simulationScene;
     private PhysicsScene2D _physicsScene;
     private readonly Dictionary<Transform, Transform> _spawnedObjects = new Dictionary<Transform, Transform>();
-
-    private void Awake()
-    {
-        //CreatePhysicsScene();
-    }
 
     private void CreatePhysicsScene()
     {
@@ -71,7 +65,7 @@ public class Projection : Singleton<Projection>
         var ghostObj = Instantiate(ghostBullet.gameObject, pos, rotation);
         //ghostBullet.transform.SetPositionAndRotation(pos, rotation);
         SceneManager.MoveGameObjectToScene(ghostBullet.gameObject, _simulationScene);
-        ghostBullet.Move(.2f);
+        ghostBullet.Move();
 
         //print(LayerMask.LayerToName(ghostObj.gameObject.layer));
 

@@ -9,10 +9,10 @@ public class StandartBullet : IBullet
     {
         rb = GetComponent<Rigidbody2D>();
     }
-    public override void Move(float speed)
+    public override void Move()
     {
         rb.isKinematic = false;
-        rb.velocity = transform.right * speed;
+        rb.velocity = transform.right * flySpeed;
 
     }
     public override void SetWeaponUsed(IWeapon weapon)
@@ -21,21 +21,9 @@ public class StandartBullet : IBullet
     }
     public override void Stop(Transform parent)
     {
-        
-         
-           
-                Destroy(gameObject);
-            
-        
+
+      Destroy(gameObject);
+
     }
 
-   
-    //System.Reflection.FieldInfo[] SendFields(Component original, GameObject destination)
-    //{
-    //    System.Type type = original.GetType();
-    //    Component copy = rb;
-    //    // Copied fields can be restricted with BindingFlags
-    //    System.Reflection.FieldInfo[] fields = type.GetFields();
-    //    return fields;
-    //}
 }

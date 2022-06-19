@@ -4,44 +4,63 @@ using UnityEngine;
 
 public abstract class Aim : MonoBehaviour, IEventObservable
 {
+    [SerializeField]
+    protected LayerMask enemyLayer;
+
     protected GameObject currentEnemy;
+
     protected float aimX = 0f, aimY = 0f;
+
     protected PlayerEvents inputEvents;
+
     protected Transform armToRotate;
     protected Transform firePoint;
-    [SerializeField]
-    protected LayerMask  enemyLayer;
+
     protected Head head;
-    SpriteRenderer enemySprite;
-    SpriteRenderer armSprite;
-    PlayerView playerView;
+
+
+    private SpriteRenderer[] _enemySprites;
+    private SpriteRenderer _armSprite;
+    private PlayerView _playerView;
     protected virtual void Awake()
     {
         armToRotate = transform;
         inputEvents = GetComponentInParent<PlayerEvents>();
         firePoint = GetComponentInChildren<Transform>();
         head = GetComponentInParent<PlayerEvents>().GetComponentInChildren<Head>();
-        armSprite = GetComponent<SpriteRenderer>();
-        playerView = PlayerInfo.instance.View;
+        _armSprite = GetComponent<SpriteRenderer>();
+        _playerView = PlayerInfo.instance.View;
     }
-   
+
+    private void Update()
+    {
+        UpdateTrackedEnemy();
+        UpdateAngleView();
+    }
 
     protected void UpdateTrackedEnemy()
     {
         GameObject enemy = Work();
         if (enemy != currentEnemy)
         {
-            if (currentEnemy)
+            if (currentEnemy && _enemySprites[0].sharedMaterial == MaterialsHolder.instance.hologramMaterial)
             {
-                enemySprite.material = MaterialsHolder.instance.defaultMaterial;
-                //currentEnemy.GetComponentInChildren<SpriteRenderer>().material = MaterialsHolder.instance.defaultMaterial;
+                for(int i = 0; i < _enemySprites.Length; i++)
+                {
+                    _enemySprites[i].sharedMaterial = MaterialsHolder.instance.defaultMaterial;
+                }
             }
         }
         if (enemy)
         {
-            enemySprite = enemy.GetComponentInChildren<SpriteRenderer>();
-
-            enemySprite.material = MaterialsHolder.instance.hologramMaterial;
+            _enemySprites = enemy.GetComponentsInChildren<SpriteRenderer>();
+            if (_enemySprites[0].sharedMaterial ==MaterialsHolder.instance.defaultMaterial)
+            {
+                for (int i = 0; i < _enemySprites.Length; i++)
+                {
+                    _enemySprites[i].sharedMaterial = MaterialsHolder.instance.hologramMaterial;
+                }
+            }
             currentEnemy = enemy;
 
 
@@ -54,15 +73,15 @@ public abstract class Aim : MonoBehaviour, IEventObservable
         if (inputEvents.transform.right.x > 0)
         {
             head.MoveHead(transform.right);
-            if (transform.eulerAngles.z < 90 || transform.eulerAngles.z > 270)
+            if (transform.eulerAngles.z <= 90 || transform.eulerAngles.z >= 270)
             {
-                armSprite.sortingOrder = playerView.commonSortingOrder - 1;
+                _armSprite.sortingOrder = _playerView.commonSortingOrder - 2;
                 y = transform.localScale.x;
 
             }
             else
             {
-                armSprite.sortingOrder = playerView.commonSortingOrder + 1;
+                _armSprite.sortingOrder = _playerView.commonSortingOrder + 1;
                 y = -transform.localScale.x;
 
             }
@@ -70,24 +89,31 @@ public abstract class Aim : MonoBehaviour, IEventObservable
         else
         {
             head.MoveHead(-armToRotate.right);
-            if (transform.eulerAngles.z <= 270 && transform.eulerAngles.z >= 90)
+            if (transform.eulerAngles.z < 270 && transform.eulerAngles.z > 90)
             {
-                armSprite.sortingOrder = playerView.commonSortingOrder - 1;
+                _armSprite.sortingOrder = _playerView.commonSortingOrder - 2;
                 y = transform.localScale.x;
 
             }
             else
             {
-                armSprite.sortingOrder = playerView.commonSortingOrder + 1;
+                _armSprite.sortingOrder = _playerView.commonSortingOrder + 1;
                 y = -transform.localScale.x;
 
             }
         }
         armToRotate.transform.localScale = new Vector3(armToRotate.transform.localScale.x, y, armToRotate.transform.localScale.z);
     }
+
+    public void SetDefaultPosition()
+    {
+
+    }
     public virtual void OnEnable()
     {
-        playerView = PlayerInfo.instance.View;
+        _playerView = PlayerInfo.instance.View;
+
+        //UpdateAngleView();
 
         inputEvents.onAim.AddListener(UpdateAim);
 
@@ -98,7 +124,10 @@ public abstract class Aim : MonoBehaviour, IEventObservable
         inputEvents.onAim.RemoveListener(UpdateAim);
         if (currentEnemy)
         {
-            enemySprite.material = MaterialsHolder.instance.defaultMaterial;
+            for (int i = 0; i < _enemySprites.Length; i++)
+            {
+                _enemySprites[i].sharedMaterial = MaterialsHolder.instance.defaultMaterial;
+            }
         }
     }
     protected virtual void UpdateAim(Vector2 param)
@@ -120,9 +149,9 @@ public abstract class Aim : MonoBehaviour, IEventObservable
             aimY = 0f;
         }
 
-        UpdateTrackedEnemy();
+        //UpdateTrackedEnemy();
 
-        UpdateAngleView();
+        //UpdateAngleView();
     }
     public abstract GameObject Work();
 

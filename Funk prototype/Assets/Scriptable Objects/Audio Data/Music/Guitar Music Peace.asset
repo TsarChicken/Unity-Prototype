@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ed5913293762145b5047d515611ca5, type: 3}
+  m_Name: Guitar Music Peace
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 49aa7f515a890fa4dbc66863b679701c, type: 3}
+  - {fileID: 8300000, guid: 8f682530bb7de6e42801986628281173, type: 3}
+  - {fileID: 8300000, guid: 42ba39c427a810549a6450a7e4e28657, type: 3}
+  - {fileID: 8300000, guid: f5397da5185083642bc631ca69c302a2, type: 3}
+  - {fileID: 8300000, guid: 38d6fb4ecb8b9a74b9ad3999931721f0, type: 3}

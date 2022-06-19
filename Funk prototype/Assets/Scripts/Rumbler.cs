@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
@@ -13,8 +11,8 @@ public class Rumbler : MonoBehaviour
 {
     private PlayerInput playerInput;
     private RumblePattern activeRumblePattern;
-    private float rumbleDurration;
-    private float pulseDurration;
+    private float rumbleDuration;
+    private float pulseDuration;
     private float lowA;
     private float lowStep;
     private float highA;
@@ -40,7 +38,7 @@ public class Rumbler : MonoBehaviour
         activeRumblePattern = RumblePattern.Constant;
         lowA = low;
         highA = high;
-        rumbleDurration = Time.time + duration;
+        rumbleDuration = Time.time + duration;
     }
 
     public void RumblePulse(float low, float high, float burstTime, float duration)
@@ -49,8 +47,8 @@ public class Rumbler : MonoBehaviour
         lowA = low;
         highA = high;
         rumbleStep = burstTime;
-        pulseDurration = Time.time + burstTime;
-        rumbleDurration = Time.time + duration;
+        pulseDuration = Time.time + burstTime;
+        rumbleDuration = Time.time + duration;
         isMotorActive = true;
         var g = GetGamepad();
         g?.SetMotorSpeeds(lowA, highA);
@@ -63,7 +61,7 @@ public class Rumbler : MonoBehaviour
         highA = highStart;
         lowStep = (lowEnd - lowStart) / duration;
         highStep = (highEnd - highStart) / duration;
-        rumbleDurration = Time.time + duration;
+        rumbleDuration = Time.time + duration;
     }
 
     public void StopRumble()
@@ -93,10 +91,9 @@ public class Rumbler : MonoBehaviour
             currentNonStopLowA *= nonStopModifier;
         }
     }
-    // Unity MonoBehaviors
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = PlayerInfo.instance.GetComponent<PlayerInput>();
     }
 
     private void Update()
@@ -105,7 +102,7 @@ public class Rumbler : MonoBehaviour
 
 
 
-        if (Time.time > rumbleDurration)
+        if (Time.time > rumbleDuration)
         {
 
             StopRumble();
@@ -124,10 +121,10 @@ public class Rumbler : MonoBehaviour
 
                 case RumblePattern.Pulse:
 
-                    if (Time.time > pulseDurration)
+                    if (Time.time > pulseDuration)
                     {
                         isMotorActive = !isMotorActive;
-                        pulseDurration = Time.time + rumbleStep;
+                        pulseDuration = Time.time + rumbleStep;
                         if (!isMotorActive)
                         {
                             gamepad.SetMotorSpeeds(0, 0);
@@ -150,7 +147,6 @@ public class Rumbler : MonoBehaviour
         
     }
 
-    
     private void OnDestroy()
     {
         StopAllCoroutines();
@@ -162,7 +158,6 @@ public class Rumbler : MonoBehaviour
         StopAllCoroutines();
         StopRumble();
     }
-    // Private helpers
 
     private Gamepad GetGamepad()
     {

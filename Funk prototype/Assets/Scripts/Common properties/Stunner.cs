@@ -1,36 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Stunner : MonoBehaviour
 {
-    public GameEvent onStun = new GameEvent();
-    private IControllable behaviour;
-    [SerializeField]
-    private float stunTime;
+    [SerializeField] private float stunTime;
+
+    public readonly GameEvent onStun = new GameEvent();
+
+    private IControllable _behaviourToStun;
+
     private void Start()
     {
-        behaviour = GetComponent<IControllable>();
+        GetComponent<Rigidbody2D>();
+        _behaviourToStun = GetComponent<IControllable>();
         onStun.AddListener(StunBehaviour);
-        onStun.AddListener(StunView);
     }
 
     void StunBehaviour()
     {
-        print("STUNNED");
         StartCoroutine(Delay());
     }
-    void StunView()
-    {
-
-    }
+   
     IEnumerator Delay()
     {
-        behaviour.ControlView();
-        behaviour.Block();
+        _behaviourToStun.Block();
         
         yield return new WaitForSeconds(stunTime);
 
-        behaviour.Unblock();
+        _behaviourToStun.Unblock();
     }
 }

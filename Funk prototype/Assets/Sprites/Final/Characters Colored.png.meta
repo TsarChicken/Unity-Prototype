@@ -1,0 +1,746 @@
+fileFormatVersion: 2
+guid: ccd71447e8939e44a849d9e88a95e17b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 702752452507867496
+    second: Characters Colored_0
+  - first:
+      213: 7789776470050947311
+    second: Characters Colored_1
+  - first:
+      213: -4428725190191143881
+    second: Characters Colored_2
+  - first:
+      213: -226322011009590704
+    second: Characters Colored_3
+  - first:
+      213: -2675170217340639939
+    second: Characters Colored_4
+  - first:
+      213: 6071161350824518110
+    second: Characters Colored_6
+  - first:
+      213: 8020200809392187400
+    second: Characters Colored_7
+  - first:
+      213: 4689150070867869843
+    second: Characters Colored_8
+  - first:
+      213: 1596358121003000635
+    second: Characters Colored_9
+  - first:
+      213: 2559355150326036750
+    second: Characters Colored_10
+  - first:
+      213: -6854327780425950912
+    second: Characters Colored_11
+  - first:
+      213: 7362875338947144642
+    second: Characters Colored_12
+  - first:
+      213: -6616358347864494899
+    second: Characters Colored_13
+  - first:
+      213: -4458467154741752735
+    second: Characters Colored_15
+  - first:
+      213: 8024675504902031467
+    second: Characters Colored_16
+  - first:
+      213: -7997151370141246134
+    second: Characters Colored_17
+  - first:
+      213: -4617679039813660760
+    second: Characters Colored_18
+  - first:
+      213: 8379195540554387146
+    second: Characters Colored_19
+  - first:
+      213: 4815264123593663770
+    second: Characters Colored_20
+  - first:
+      213: -3368906770272369821
+    second: Characters Colored_21
+  - first:
+      213: -7884926452035834939
+    second: Characters Colored_22
+  - first:
+      213: 8712728772592529083
+    second: Characters Colored_23
+  - first:
+      213: 5189042371888834361
+    second: Characters Colored_24
+  - first:
+      213: 6147967687059239498
+    second: Characters Colored_25
+  - first:
+      213: -1638684056930629809
+    second: Characters Colored_26
+  - first:
+      213: 857297113820048035
+    second: Characters Colored_27
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 252
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Characters Colored_0
+      rect:
+        serializedVersion: 2
+        x: 3261
+        y: 465
+        width: 651
+        height: 1099
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86914c8d1ada0c900800000000000000
+      internalID: 702752452507867496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_1
+      rect:
+        serializedVersion: 2
+        x: 5206
+        y: 1557
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe045117d68da1c60800000000000000
+      internalID: 7789776470050947311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_2
+      rect:
+        serializedVersion: 2
+        x: 5894
+        y: 0
+        width: 714
+        height: 1564
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73425d667e10a82c0800000000000000
+      internalID: -4428725190191143881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_3
+      rect:
+        serializedVersion: 2
+        x: 6875
+        y: 0
+        width: 709
+        height: 1564
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05adbe08451fbdcf0800000000000000
+      internalID: -226322011009590704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 106
+        width: 350
+        height: 1323
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d35e4b96cd2efdad0800000000000000
+      internalID: -2675170217340639939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_6
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 32
+        width: 1226
+        height: 1445
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed1e9f90519114450800000000000000
+      internalID: 6071161350824518110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_7
+      rect:
+        serializedVersion: 2
+        x: 2124
+        y: 74
+        width: 514
+        height: 1321
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8082f1fa42a7d4f60800000000000000
+      internalID: 8020200809392187400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_8
+      rect:
+        serializedVersion: 2
+        x: 3094
+        y: 1058
+        width: 118
+        height: 115
+      alignment: 9
+      pivot: {x: 0.17954887, y: 0.9033384}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 390c3903525331140800000000000000
+      internalID: 4689150070867869843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_9
+      rect:
+        serializedVersion: 2
+        x: 4268
+        y: 832
+        width: 403
+        height: 608
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b33a1b0d047672610800000000000000
+      internalID: 1596358121003000635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_10
+      rect:
+        serializedVersion: 2
+        x: 5042
+        y: 669
+        width: 688
+        height: 749
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e09ff3df2f7a48320800000000000000
+      internalID: 2559355150326036750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_11
+      rect:
+        serializedVersion: 2
+        x: 4231
+        y: 432
+        width: 44
+        height: 255
+      alignment: 9
+      pivot: {x: 0.46411133, y: 0.96452564}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0499e91133980e0a0800000000000000
+      internalID: -6854327780425950912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_12
+      rect:
+        serializedVersion: 2
+        x: 4464
+        y: 399
+        width: 48
+        height: 300
+      alignment: 9
+      pivot: {x: 0.51645917, y: 0.9580225}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cbad6f4c103e2660800000000000000
+      internalID: 7362875338947144642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_13
+      rect:
+        serializedVersion: 2
+        x: 5183
+        y: 502
+        width: 47
+        height: 96
+      alignment: 9
+      pivot: {x: 0.51706904, y: 0.94692296}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcca8d83329fd24a0800000000000000
+      internalID: -6616358347864494899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_15
+      rect:
+        serializedVersion: 2
+        x: 5083
+        y: 480
+        width: 43
+        height: 104
+      alignment: 9
+      pivot: {x: 0.40674964, y: 0.95495546}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16c0fd6aeb75022c0800000000000000
+      internalID: -4458467154741752735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_16
+      rect:
+        serializedVersion: 2
+        x: 3298
+        y: 303
+        width: 33
+        height: 147
+      alignment: 9
+      pivot: {x: 0.47154653, y: 0.9598179}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b68c67beadf5d5f60800000000000000
+      internalID: 8024675504902031467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_17
+      rect:
+        serializedVersion: 2
+        x: 3468
+        y: 221
+        width: 29
+        height: 148
+      alignment: 9
+      pivot: {x: 0.5485503, y: 0.96939725}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4dd3b71339640190800000000000000
+      internalID: -7997151370141246134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_18
+      rect:
+        serializedVersion: 2
+        x: 4297
+        y: 189
+        width: 52
+        height: 242
+      alignment: 9
+      pivot: {x: 0.53037673, y: 0.9699001}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8afc329f065baefb0800000000000000
+      internalID: -4617679039813660760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_19
+      rect:
+        serializedVersion: 2
+        x: 4548
+        y: 110
+        width: 46
+        height: 314
+      alignment: 9
+      pivot: {x: 0.65113366, y: 0.9776209}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ace084203f1e84470800000000000000
+      internalID: 8379195540554387146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_20
+      rect:
+        serializedVersion: 2
+        x: 5068
+        y: 261
+        width: 37
+        height: 89
+      alignment: 9
+      pivot: {x: 0.5676863, y: 0.92617315}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a15ab72453143d240800000000000000
+      internalID: 4815264123593663770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_21
+      rect:
+        serializedVersion: 2
+        x: 5220
+        y: 235
+        width: 40
+        height: 103
+      alignment: 9
+      pivot: {x: 0.5536621, y: 0.9203574}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 363c184442d3f31d0800000000000000
+      internalID: -3368906770272369821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_22
+      rect:
+        serializedVersion: 2
+        x: 3287
+        y: 150
+        width: 81
+        height: 119
+      alignment: 9
+      pivot: {x: 0.11653947, y: 0.96255517}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cba2520b2d139290800000000000000
+      internalID: -7884926452035834939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_23
+      rect:
+        serializedVersion: 2
+        x: 3435
+        y: 0
+        width: 79
+        height: 105
+      alignment: 9
+      pivot: {x: 0.89603317, y: 0.93036187}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbee3ba18a4d9e870800000000000000
+      internalID: 8712728772592529083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_24
+      rect:
+        serializedVersion: 2
+        x: 4249
+        y: 46
+        width: 41
+        height: 100
+      alignment: 9
+      pivot: {x: 0.48123094, y: 0.9310852}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93762e46b8e230840800000000000000
+      internalID: 5189042371888834361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_25
+      rect:
+        serializedVersion: 2
+        x: 5057
+        y: 80
+        width: 66
+        height: 33
+      alignment: 9
+      pivot: {x: 0.16845703, y: 0.8857956}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a42febdb908f15550800000000000000
+      internalID: 6147967687059239498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_26
+      rect:
+        serializedVersion: 2
+        x: 5226
+        y: 75
+        width: 60
+        height: 33
+      alignment: 9
+      pivot: {x: 0.32759604, y: 0.89182353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f47cd8748893249e0800000000000000
+      internalID: -1638684056930629809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Characters Colored_27
+      rect:
+        serializedVersion: 2
+        x: 4523
+        y: 35
+        width: 97
+        height: 30
+      alignment: 9
+      pivot: {x: 0.10043492, y: 0.8857867}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3aa2630de2bb5eb00800000000000000
+      internalID: 857297113820048035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures:
+    - texture: {fileID: 2800000, guid: 778745fca0140024b86c534826f862bc, type: 3}
+      name: _NormalMap
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

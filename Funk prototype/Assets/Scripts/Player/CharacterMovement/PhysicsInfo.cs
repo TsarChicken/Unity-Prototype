@@ -80,11 +80,9 @@ public class PhysicsInfo : MonoBehaviour
     }
 
    
-    // Update is called once per frame
-    private void FixedUpdate()
+    public void UpdatePhysics()
     {
         CheckPhysics();
-
         GroundMovement();
         MidAirMovement();
 
@@ -202,15 +200,6 @@ public class PhysicsInfo : MonoBehaviour
         rb.drag = airLinearDrag;
     }
 
-   
-    public void FlipAirPhys()
-    {
-        FlipMultipliers();
-        FlipJump();
-        FlipStandartGravity();
-        coyoteCounter = 0f;
-    }
-
     public void FlipStandartGravity()
     {
         standartGravity = -standartGravity;
@@ -220,11 +209,35 @@ public class PhysicsInfo : MonoBehaviour
         jumpForce = -jumpForce;
     }
 
-    public void FlipMultipliers()
+    public void SetJumpAndGravityPositive()
     {
-        lowJumpFallMultiplier = -lowJumpFallMultiplier;
-        fallMultiplier = -fallMultiplier;
-        rb.gravityScale = -rb.gravityScale;
+        jumpForce = Mathf.Abs(jumpForce);
+        standartGravity = Mathf.Abs(standartGravity);
+        coyoteCounter = 0f;
+
+    }
+    public void SetJumpAndGravityNegative()
+    {
+        jumpForce = -Mathf.Abs(jumpForce);
+        standartGravity = -Mathf.Abs(standartGravity);
+        coyoteCounter = 0f;
+
+    }
+
+
+    public void SetPositiveMultipliers()
+    {
+        lowJumpFallMultiplier = Mathf.Abs(lowJumpFallMultiplier);
+        fallMultiplier = Mathf.Abs(fallMultiplier);
+        rb.gravityScale = Mathf.Abs(rb.gravityScale);
+        coyoteCounter = 0f;
+    }
+
+    public void SetNegativeMultipliers()
+    {
+        lowJumpFallMultiplier = -Mathf.Abs(lowJumpFallMultiplier);
+        fallMultiplier = -Mathf.Abs(fallMultiplier);
+        rb.gravityScale = -Mathf.Abs(rb.gravityScale);
         coyoteCounter = 0f;
     }
 

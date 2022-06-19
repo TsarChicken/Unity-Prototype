@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShootTeleport : Shoot
@@ -7,16 +5,16 @@ public class ShootTeleport : Shoot
     [SerializeField]
     private float shootWaitTime;
 
-    private float waitBeforeShooting;
+    private float _waitBeforeShooting;
 
 
 
-    private MagnetBullet magnetBullet;
+    private MagnetBullet _magnetBullet;
     public override bool CanFire
     {
         get
         {
-            return Time.time > waitBeforeShooting;
+            return Time.time > _waitBeforeShooting;
         }
     }
 
@@ -25,10 +23,10 @@ public class ShootTeleport : Shoot
     protected override void Work()
     {
         print("Work");
-        magnetBullet.gameObject.SetActive(true);
+        _magnetBullet.gameObject.SetActive(true);
 
-        magnetBullet.ClearKinematic();
-        if (magnetBullet.transform.position != weaponParent.firepoint.position )
+        _magnetBullet.ClearKinematic();
+        if (_magnetBullet.transform.position != weaponParent.firepoint.position )
 
         {
             Debug.Log("Back");
@@ -40,9 +38,9 @@ public class ShootTeleport : Shoot
         {
             Debug.Log("Forward");
 
-            magnetBullet.Move(bulletSpeed);
+            _magnetBullet.Move();
         }
-        waitBeforeShooting = Time.time + shootWaitTime;
+        _waitBeforeShooting = Time.time + shootWaitTime;
 
     }
 
@@ -50,9 +48,9 @@ public class ShootTeleport : Shoot
     public override void OnDisable()
     {
         base.OnDisable();
-        if (magnetBullet.transform.parent == weaponParent.firepoint)
+        if (_magnetBullet.transform.parent == weaponParent.firepoint)
         {
-            magnetBullet.gameObject.SetActive(false);
+            _magnetBullet.gameObject.SetActive(false);
         }
 
     }
@@ -61,18 +59,17 @@ public class ShootTeleport : Shoot
 
         base.OnEnable();
 
-        magnetBullet = weaponParent.bullet as MagnetBullet;
+        _magnetBullet = weaponParent.bullet as MagnetBullet;
 
     }
 
     protected virtual void BringBullet()
     {
-        magnetBullet.transform.position = weaponParent.firepoint.position;
-        magnetBullet.ZeroVelocity();
+        _magnetBullet.transform.position = weaponParent.firepoint.position;
+        _magnetBullet.ZeroVelocity();
 
-        magnetBullet.transform.SetParent(weaponParent.firepoint);
-        //if (!isShooting)
-        magnetBullet.gameObject.SetActive(false);
+        _magnetBullet.transform.SetParent(weaponParent.firepoint);
+        _magnetBullet.gameObject.SetActive(false);
     }
    
 }

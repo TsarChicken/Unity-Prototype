@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GamepadVibration : MonoBehaviour, IEventObservable
 {
-    private Rumbler rumbler;
-    private PlayerEvents input;
+    private Rumbler _rumbler;
+    private PlayerEvents _input;
+    private Health _hp;
     [SerializeField] private RumbleData jump;
     [SerializeField] private RumbleData shoot;
     [SerializeField] private RumbleData melee;
@@ -17,25 +16,31 @@ public class GamepadVibration : MonoBehaviour, IEventObservable
 
     void Awake()
     {
-        input = GetComponent<PlayerEvents>();
-        rumbler = GetComponent<Rumbler>();
+        _input =  PlayerInfo.instance.GetComponent<PlayerEvents>();
+        _hp = PlayerInfo.instance.GetComponent<Health>();
+
+        _rumbler = GetComponent<Rumbler>();
+
     }
 
     public void OnEnable()
     {
-        input.onJump.AddListener(Jump);
-        input.onFire.AddListener(Shoot);
-        input.onMelee.AddListener(Melee);
-        input.onGravitySwitch.AddListener(Gravity);
-
+        _input.onJump.AddListener(Jump);
+        _input.onFire.AddListener(Shoot);
+        _input.onMelee.AddListener(Melee);
+        _input.onGravitySwitch.AddListener(Gravity);
+        _hp.onHurt.AddListener(Hurt);
+        _hp.onDie.AddListener(Die);
     }
 
     public void OnDisable()
     {
-        input.onJump.RemoveListener(Jump);
-        input.onFire.RemoveListener(Shoot);
-        input.onMelee.RemoveListener(Melee);
-        input.onGravitySwitch.RemoveListener(Gravity);
+        _input.onJump.RemoveListener(Jump);
+        _input.onFire.RemoveListener(Shoot);
+        _input.onMelee.RemoveListener(Melee);
+        _input.onGravitySwitch.RemoveListener(Gravity);
+        _hp.onHurt.RemoveListener(Hurt);
+        _hp.onDie.RemoveListener(Die);
 
     }
 
@@ -59,20 +64,28 @@ public class GamepadVibration : MonoBehaviour, IEventObservable
         HandleRumbling(gravity);
     }
 
+    public void Hurt()
+    {
+        HandleRumbling(hurt);
+    }
 
+    public void Die()
+    {
+        HandleRumbling(die);
+    }
     private void HandleRumbling(RumbleData data)
     {
-        rumbler.StopRumble();
+        _rumbler.StopRumble();
         switch (data.pattern)
         {
             case RumblePattern.Constant:
-                rumbler.RumbleConstant(data.lowStart, data.highStart, data.duration);
+                _rumbler.RumbleConstant(data.lowStart, data.highStart, data.duration);
                 break;
             case RumblePattern.Pulse:
-                rumbler.RumblePulse(data.lowStart, data.highStart, data.burstTime, data.duration);
+                _rumbler.RumblePulse(data.lowStart, data.highStart, data.burstTime, data.duration);
                 break;
             case RumblePattern.Linear:
-                rumbler.RumbleLinear(data.lowStart, data.lowEnd, data.highStart, data.lowEnd, data.duration);
+                _rumbler.RumbleLinear(data.lowStart, data.lowEnd, data.highStart, data.lowEnd, data.duration);
                 break;
             default:
                 break;

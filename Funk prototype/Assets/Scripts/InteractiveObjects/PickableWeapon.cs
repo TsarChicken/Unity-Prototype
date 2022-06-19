@@ -1,24 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PickableWeapon : IInteractable
+public class PickableWeapon : MonoBehaviour
 {
-    private WeaponManager weaponManager;
+    private WeaponManager _weaponManager;
     [SerializeField]
     private IWeapon weapon;
-
-    public override void Interact()
+    public void PickWeapon()
     {
-        weaponManager = PlayerInfo.instance.Weapons;
-        print("pick");
-        foreach (var item in Resources.FindObjectsOfTypeAll<PickableWeapon>())
+        _weaponManager = PlayerInfo.instance.Weapons;
+        var weapons = Resources.FindObjectsOfTypeAll<PickableWeapon>();
+        for(int i = 0; i < weapons.Length; i++)
         {
-            Debug.Log(item);
-            item.gameObject.SetActive(true);
-            item.GetComponent<PickableWeapon>().enabled = true;
+            weapons[i].gameObject.SetActive(true);
         }
         gameObject.SetActive(false);
-        weaponManager.UpdateMainWeapon(weapon);
+        _weaponManager.UpdateMainWeapon(weapon);
     }
 }

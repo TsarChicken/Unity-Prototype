@@ -1,20 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PickableItem : IInteractable
+public class PickableItem : MonoBehaviour
 {
-    private WeaponManager weaponManager;
+    private WeaponManager _weaponManager;
     [SerializeField]
     private IWeapon weapon;
 
-   
-    public override void Interact()
+    public  void Interact()
     {
-        weaponManager = PlayerInfo.instance.Weapons;
+        _weaponManager = PlayerInfo.instance.Weapons;
+        weapon = _weaponManager.Holder;
         weapon.bullet = GetComponent<BottleBullet>();
-
-        weaponManager.UpdateCurrentWeapon(weapon);
+        _weaponManager.UpdateCurrentWeapon(weapon);
         enabled = false;
       
     }

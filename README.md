@@ -1,5 +1,4 @@
 # Unity-Prototype
-First prototype of a player controller
 
 Controls are set for Dualshock 4 and keyboard
 
